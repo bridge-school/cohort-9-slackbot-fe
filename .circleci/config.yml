@@ -1,0 +1,64 @@
+### Template for example deploy
+version: 2
+
+aliases:
+  - &set-working-directory
+    working_directory: /home/circleci/project
+
+  - &attach-workspace
+    attach_workspace:
+      at: /home/circleci/project
+
+jobs:
+  build:
+    <<: *set-working-directory
+    docker:
+      - image: circleci/node:10.15.0
+    steps:
+      - checkout
+      - restore_cache:
+          name: Restore NPM Package Cache
+          key: npm-packages-{{ .Branch }}-{{ checksum "package.json" }}
+      - run:
+          name: Install Dependencies
+          command: npm install
+      - save_cache:
+          name: Save NPM Package Cache
+          key: npm-packages-{{ .Branch }}-{{ checksum "package.json" }}
+          paths:
+            - node_modules/
+      - run:
+          name: Run Tests
+          command: npm run test
+      - run:
+          name: Build
+          command: npm run build
+      - persist_to_workspace:
+          root: /home/circleci/project
+          paths:
+            - .circleci
+            - build
+  deploy:
+    <<: *set-working-directory
+    docker:
+      - image: circleci/python:2.7
+    steps:
+      - *attach-workspace
+      - run:
+          name: Install awscli
+          command: sudo pip install awscli
+      - run:
+          name: Deploy to S3 Bucket
+          command: .circleci/scripts/deploy_frontend.sh $FRONTEND_BUCKET_ID
+workflows:
+  version: 2
+  build_deploy:
+    jobs:
+      - build
+      - deploy:
+          filters:
+            branches:
+              only:
+                - master
+          requires:
+            - build
