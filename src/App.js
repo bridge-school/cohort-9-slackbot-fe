@@ -1,14 +1,7 @@
 import React, { useEffect } from "react";
 import logo from "./logo.svg";
 import "./App.css";
-
-const API_BASE_URL =
-  process.env.NODE_ENV === "development"
-    ? ""
-    : `http://${process.env.REACT_APP_PROJECT_NAME}-backend.bridgeschoolapp.io`;
-
-const request = (endpoint, method = "GET") =>
-  fetch(`${API_BASE_URL}/${endpoint}`);
+import { request } from "./backend-request";
 
 function App() {
   useEffect(() => {
