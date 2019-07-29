@@ -41,28 +41,12 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Connecting to the backend
 
-### Code Splitting
+To connect to your backend use the `request` function from `backend-request/index.js`. There is an example of how this is used in `App.js`. This will handle requests being made locally and in production.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+Please avoid connecting your frontend directly to firebase, connections to firebase should be handled through your backend.
 
-### Analyzing the Bundle Size
+## Deployments
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+Everytime you merge a pull request to master, it will run the tests and deploy. You can view your frontend at `project-name-frontend.bridgeschoolapp.io`. This is where your Product Owner will verify and approve the work you're doing!
