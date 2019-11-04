@@ -1,4 +1,44 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Project Requirements
+
+- [ ]  Use Redux to control state, including making async requests
+- [ ]  Store data in Firebase and retrieve it through the backend server
+- [ ]  No hard coded strings: the app should be able to be translated into a different language
+- [ ]  Have loading and error states
+- [ ]  Should have unit tests for action creators, reducers and utility functions (front-end only)
+- [ ] Should fulfill criteria under Groups A & B of this accessibility checklist: https://accessibility.18f.gov/checklist/
+
+## Project Workflow
+
+### Setting up
+
+- Clone your git repos directly (do not fork!)
+- Follow the setup instructions for each repo in the respective READMEs
+- Run the app
+
+### Development Workflow
+
+- Pick a feature / part of a feature from your project board and assign it to yourself. Move the ticket into in progress and make sure your whole team knows you are working on it.
+- Pull the most recent version of master and create a branch off it
+    - For a feature: `feat/<name of your feature>`
+    - For a bug: `bug/<name of bug>`
+    - For a chore: `chore/<name of chore>`
+- Work on your ticket
+- Once you are ready to get some feedback on your code, push your branch
+    - `git push origin <name of your branch>`
+- Go to GitHub and create a Pull Request
+    - The title should be formatted as `[Feature/Bug/Chore][Ticket #] Title of what you did`
+    - In the description make sure to link to the ticket and include any relevant screenshots
+    - Describe all the changes you have made
+- Assign your team members for review, once you have one approval you can merge your code
+- Your code will be automatically deployed to the development environment
+
+### General Tips
+
+- Break your features into small chunks of work
+- Try to keep PRs as small and single purpose as possible
+- Use your class time to break up work, review PRs and make sure everyone leaves with an idea of what they are working on
+- Bug people to review your PRs!
+- If you have many PRs open, prioritize getting them reviewed and merged over starting new work
 
 ## Available Scripts
 
@@ -46,41 +86,3 @@ You can learn more in the [Create React App documentation](https://facebook.gith
 To connect to your backend use the `request` function from `backend-request/index.js`. There is an example of how this is used in `App.js`. This will handle requests being made locally and in production.
 
 Please avoid connecting your frontend directly to firebase, connections to firebase should be handled through your backend.
-
-## Deployments
-
-Everytime you merge a pull request to master, it will run the tests and deploy. You can view your frontend at `project-name-frontend.bridgeschoolapp.io`. This is where your Product Owner will verify and approve the work you're doing!
-
-
-## Project Workflow
-
-### Setting up
-
-- Clone your git repos directly (do not fork!)
-- Follow the setup instructions for each repo in the respective READMEs
-- Run the app
-
-### Development Workflow
-
-- Pick a feature / part of a feature from your project board and assign it to yourself. Move the ticket into in progress and make sure your whole team knows you are working on it.
-- Pull the most recent version of master and create a branch off it
-    - For a feature: `feat/<name of your feature>`
-    - For a bug: `bug/<name of bug>`
-    - For a chore: `chore/<name of chore>`
-- Work on your ticket
-- Once you are ready to get some feedback on your code, push your branch
-    - `git push origin <name of your branch>`
-- Go to GitHub and create a Pull Request
-    - The title should be formatted as `[Feature/Bug/Chore][Ticket #] Title of what you did`
-    - In the description make sure to link to the ticket and include any relevant screenshots
-    - Describe all the changes you have made
-- Assign your team members for review, once you have one approval you can merge your code
-- Your code will be automatically deployed to the development environment
-
-### General Tips
-
-- Break your features into small chunks of work
-- Try to keep PRs as small and single purpose as possible
-- Use your class time to break up work, review PRs and make sure everyone leaves with an idea of what they are working on
-- Bug people to review your PRs!
-- If you have many PRs open, prioritize getting them reviewed and merged over starting new work
