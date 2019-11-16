@@ -2,7 +2,7 @@ import React from "react";
 import Header from "./Header";
 import Form from "./Form";
 
-const FormApp = () => {
+const NewPoll = () => {
   return (
     <>
       <Header />
@@ -11,4 +11,4 @@ const FormApp = () => {
   );
 };
 
-export default FormApp;
+export default NewPoll;

@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { request } from "./backend-request";
 
-import FormApp from "./components/Form/FormApp";
+import NewPoll from "./components/Form/NewPoll";
 function App() {
   useEffect(() => {
     const fetchData = async () => {
@@ -11,7 +11,7 @@ function App() {
   });
   return (
     <div className="App">
-      <FormApp />
+      <NewPoll />
     </div>
   );
 }
