@@ -1,40 +1,36 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
-import ListOfOptions from "./ListOfOptions";
+import ListOfChannels from "./ListOfChannels";
 
-// Eventually we will get the channel data from our backend.
+// Eventually we will get the channels data from our backend, here is some dummy data:
 const channels = ["cohort9-students", "general", "help-me"];
 
 const Form = () => {
-  const [answers, setAnswers] = useState([]);
-
-  const handleAddAnswer = e => {
-    e.preventDefault();
-    console.log("answer");
-  };
   return (
     <Container>
       <div className="wrapper">
         <h2>Create New Poll</h2>
+        <form action="">
+          <label htmlFor="question">Question:</label>
+          <input type="text" id="question"></input>
 
-        <label htmlFor="question">Question:</label>
-        <input type="text" id="question"></input>
+          <label htmlFor="userGroup">User Group:</label>
+          <select id="userGroup">
+            <option value="" selected disabled hidden>
+              Choose a channel
+            </option>
 
-        <label htmlFor="userGroup">User Group:</label>
-        <select id="userGroup">
-          {channels.map((channel, idx) => (
-            <ListOfOptions channel={channel} key={idx} />
-          ))}
-        </select>
+            {channels.map((channel, idx) => (
+              <ListOfChannels channel={channel} key={idx} />
+            ))}
+          </select>
 
-        <label htmlFor="addAnswer">Answer:</label>
-
-        <input type="text" id="addAnswer" />
-        <button className="addAnswer" onClick={handleAddAnswer}>
-          + Add answer
-        </button>
-        <ul></ul>
-        <button type="submit">Submit Poll</button>
+          <label htmlFor="addAnswer">Answer:</label>
+          <input type="text" id="addAnswer" />
+          <button className="addAnswer">+ Add answer</button>
+          <ul>{/* Eventually the answers will be displayed here*/}</ul>
+          <button type="submit">Submit Poll</button>
+        </form>
       </div>
     </Container>
   );
@@ -42,57 +38,59 @@ const Form = () => {
 
 export default Form;
 
-const Container = styled.form`
+const Container = styled.section`
   padding: 50px 0;
-  font-size: 1.8rem;
   background-color: #f4f4f4;
-  h2 {
-    font-size: 3rem;
-    margin-top: 0;
-  }
-  label,
-  input,
-  select,
-  button[type="submit"] {
-    display: block;
-  }
-  input,
-  select {
-    margin-bottom: 25px;
-    border: 2px solid grey;
-    border-radius: 2px;
-    padding: 4px 0;
-  }
-  input#question {
-    width: 500px;
-  }
-  input#addAnswer {
-    width: 250px;
-    display: inline-block;
-    margin-right: 5px;
-  }
-  button.addAnswer {
-    background-color: #2fa1d4;
-    color: white;
-    border: 2px solid transparent;
-    border-radius: 3px;
-    padding: 4px 10px;
-    transition: 0.2s;
-  }
-  button.addAnswer:hover {
-    background-color: #eb2c97;
-  }
-  button[type="submit"] {
-    font-size: 2rem;
-    margin-top: 45px;
-    padding: 10px 45px;
-    background-color: #08c39d;
-    color: white;
-    border: transparent;
-    border-radius: 2px;
-    transition: 0.2s;
-  }
-  button:hover {
-    background-color: #1d9e83;
+  form {
+    font-size: 1.8rem;
+    h2 {
+      font-size: 3rem;
+      margin-top: 0;
+    }
+    label,
+    input,
+    select,
+    button[type="submit"] {
+      display: block;
+    }
+    input,
+    select {
+      margin-bottom: 25px;
+      border: 2px solid grey;
+      border-radius: 2px;
+      padding: 4px 0;
+    }
+    input#question {
+      width: 500px;
+    }
+    input#addAnswer {
+      width: 250px;
+      display: inline-block;
+      margin-right: 5px;
+    }
+    button.addAnswer {
+      background-color: #2fa1d4;
+      color: white;
+      border: 2px solid transparent;
+      border-radius: 3px;
+      padding: 4px 10px;
+      transition: 0.2s;
+    }
+    button.addAnswer:hover {
+      background-color: #eb2c97;
+    }
+    button[type="submit"] {
+      font-size: 2rem;
+      margin-top: 45px;
+      padding: 10px 45px;
+      background-color: #08c39d;
+      color: white;
+      border: transparent;
+      border-radius: 2px;
+      transition: 0.2s;
+    }
+    button:hover {
+      background-color: #1d9e83;
+    }
   }
 `;
