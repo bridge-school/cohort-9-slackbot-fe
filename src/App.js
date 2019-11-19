@@ -1,8 +1,10 @@
 import React, { useEffect } from "react";
-import logo from "./logo.svg";
-import "./App.css";
 import { request } from "./backend-request";
 
+import { createGlobalStyle } from "styled-components";
+import { Normalize } from "styled-normalize";
+
+import NewPoll from "./components/Form/NewPoll";
 function App() {
   useEffect(() => {
     const fetchData = async () => {
@@ -12,22 +14,27 @@ function App() {
   });
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Normalize />
+      <GlobalStyles />
+      <NewPoll />
     </div>
   );
 }
 
 export default App;
+
+const GlobalStyles = createGlobalStyle`
+ html {
+  font-size: 62.5%;
+}
+body {
+  @import url("https://fonts.googleapis.com/css?family=Open+Sans:400,700&display=swap");
+  font-family: "Open Sans", sans-serif;
+  font-size: 1.6rem;
+}
+.wrapper {
+  width: 80%;
+  max-width: 900px;
+  margin: 0 auto;
+}
+`;
