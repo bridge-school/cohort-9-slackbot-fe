@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import colours from "../../assets/colours";
 import ListOfChannels from "./ListOfChannels";
 
 // Eventually we will get the channels data from our backend, here is some dummy data:
@@ -40,7 +41,7 @@ export default Form;
 
 const Container = styled.section`
   padding: 50px 0;
-  background-color: #f4f4f4;
+  background-color: ${colours.lightgrey};
   form {
     font-size: 1.8rem;
     h2 {
@@ -69,7 +70,7 @@ const Container = styled.section`
       margin-right: 5px;
     }
     button.addAnswer {
-      background-color: #2fa1d4;
+      background-color: ${colours.lightblue};
       color: white;
       border: 2px solid transparent;
       border-radius: 3px;
@@ -77,20 +78,20 @@ const Container = styled.section`
       transition: 0.2s;
     }
     button.addAnswer:hover {
-      background-color: #eb2c97;
+      background-color: ${colours.pink};
     }
     button[type="submit"] {
       font-size: 2rem;
       margin-top: 45px;
       padding: 10px 45px;
-      background-color: #08c39d;
+      background-color: ${colours.green};
       color: white;
       border: transparent;
       border-radius: 2px;
       transition: 0.2s;
     }
     button:hover {
-      background-color: #1d9e83;
+      background-color: ${colours.darkblue};
     }
   }
 `;
