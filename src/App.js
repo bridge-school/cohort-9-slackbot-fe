@@ -7,7 +7,7 @@ import { Normalize } from "styled-normalize";
 
 import Header from "./components/shared/Header";
 import Form from "./components/Form/Form";
-import Homepage from "./components/Homepage";
+import Homepage from "./components/Home/Homepage";
 import Results from "./components/Results";
 
 const App = () => {

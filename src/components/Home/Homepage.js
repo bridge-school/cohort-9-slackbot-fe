@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import PreviousPolls from "./PreviousPolls";
-import colours from "../assets/colours";
+import colours from "../../assets/colours";
 
 const Homepage = () => {
   return (
