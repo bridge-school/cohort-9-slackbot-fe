@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import colours from "../../assets/colours";
-import ListOfChannels from "./ListOfChannels";
+import SelectionOfChannels from "./SelectionOfChannels";
 import PollSubmitted from "../PollSubmitted";
 
 // Eventually we will get the channels data from our backend, here is some dummy data:
@@ -23,7 +23,7 @@ const Form = () => {
             </option>
 
             {channels.map((channel, idx) => (
-              <ListOfChannels channel={channel} key={idx} />
+              <SelectionOfChannels channel={channel} key={idx} />
             ))}
           </select>
 
