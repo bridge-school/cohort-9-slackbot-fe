@@ -8,7 +8,7 @@ import { Normalize } from "styled-normalize";
 import Header from "./components/shared/Header";
 import Form from "./components/Form/Form";
 import Homepage from "./components/Homepage";
-import PollSubmitted from "./components/PollSubmitted";
+import Results from "./components/Results";
 
 const App = () => {
   useEffect(() => {
@@ -24,8 +24,9 @@ const App = () => {
       <Header />
       <Router>
         <Switch>
+          <Route exact path="/" component={Homepage} />
           <Route path="/new-poll" component={Form} />
-          <Route path="/" component={Homepage} />
+          <Route path="/results" component={Results} />
         </Switch>
       </Router>
     </div>
