@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import colours from "../../assets/colours";
 import ListOfChannels from "./ListOfChannels";
+import PollSubmitted from "../PollSubmitted";
 
 // Eventually we will get the channels data from our backend, here is some dummy data:
 const channels = ["cohort9-students", "general", "help-me"];
@@ -32,6 +33,7 @@ const Form = () => {
           <ul>{/* Eventually the answers will be displayed here*/}</ul>
           <button type="submit">Submit Poll</button>
         </form>
+        <PollSubmitted />
       </div>
     </Container>
   );

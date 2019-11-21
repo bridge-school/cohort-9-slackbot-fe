@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { request } from "./backend-request";
-import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import { createGlobalStyle } from "styled-components";
 import { Normalize } from "styled-normalize";
@@ -8,6 +8,7 @@ import { Normalize } from "styled-normalize";
 import Header from "./components/shared/Header";
 import Form from "./components/Form/Form";
 import Homepage from "./components/Homepage";
+import PollSubmitted from "./components/PollSubmitted";
 
 const App = () => {
   useEffect(() => {

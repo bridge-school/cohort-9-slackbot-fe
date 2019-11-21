@@ -6,27 +6,33 @@ import colours from "../assets/colours";
 
 const Homepage = () => {
   return (
-    <Page>
+    <Main>
       <div className="wrapper">
         <Link to="/new-poll">Create new poll</Link>
         <PreviousPolls />
       </div>
-    </Page>
+    </Main>
   );
 };
 
 export default Homepage;
 
-const Page = styled.div`
+const Main = styled.main`
   background-color: ${colours.lightgrey};
-  padding: 50px 0;
-  a {
-    font-size: 2rem;
-    padding: 10px 45px;
-    background-color: ${colours.green};
-    color: white;
-    border-radius: 2px;
-    text-decoration: none;
-    font-weight: 700;
+  div.wrapper {
+    padding: 50px 0;
+    a {
+      font-size: 2rem;
+      padding: 10px 45px;
+      background-color: ${colours.green};
+      color: white;
+      border-radius: 2px;
+      text-decoration: none;
+      font-weight: 700;
+      transition: 0.2s;
+    }
+    a:hover {
+      background-color: ${colours.darkblue};
+    }
   }
 `;
