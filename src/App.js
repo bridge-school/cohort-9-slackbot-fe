@@ -1,11 +1,15 @@
 import React, { useEffect } from "react";
 import { request } from "./backend-request";
+import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 
 import { createGlobalStyle } from "styled-components";
 import { Normalize } from "styled-normalize";
 
-import NewPoll from "./components/Form/NewPoll";
-function App() {
+import Header from "./components/shared/Header";
+import Form from "./components/Form/Form";
+import Homepage from "./components/Homepage";
+
+const App = () => {
   useEffect(() => {
     const fetchData = async () => {
       return await request("health");
@@ -16,10 +20,16 @@ function App() {
     <div className="App">
       <Normalize />
       <GlobalStyles />
-      <NewPoll />
+      <Header />
+      <Router>
+        <Switch>
+          <Route path="/new-poll" component={Form} />
+          <Route path="/" component={Homepage} />
+        </Switch>
+      </Router>
     </div>
   );
-}
+};
 
 export default App;
 
