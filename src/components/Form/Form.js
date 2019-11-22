@@ -1,13 +1,21 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import colours from "../../assets/colours";
 import SelectionOfChannels from "./SelectionOfChannels";
-import PollSubmitted from "../PollSubmitted";
+// import PollSubmitted from "../PollSubmitted";
+// import { request } from "../../backend-request/index";
 
 // Eventually we will get the channels data from our backend, here is some dummy data:
-const channels = ["cohort9-students", "general", "help-me"];
 
 const Form = () => {
+  const [channels, setChannels] = useState([]);
+  useEffect(() => {
+    console.log("hey");
+    fetch("http://localhost:8001/channels")
+      .then(res => res.json())
+      .then(data => setChannels(data))
+      .catch(error => console.log("error: ", error));
+  }, []);
   return (
     <Container>
       <div className="wrapper">
@@ -18,12 +26,12 @@ const Form = () => {
 
           <label htmlFor="userGroup">User Group:</label>
           <select id="userGroup">
-            <option value="" selected disabled hidden>
+            <option value="" defaultValue disabled hidden>
               Choose a channel
             </option>
 
-            {channels.map((channel, idx) => (
-              <SelectionOfChannels channel={channel} key={idx} />
+            {channels.map(({ name, id }) => (
+              <SelectionOfChannels channel={name} key={id} />
             ))}
           </select>
 
@@ -33,7 +41,7 @@ const Form = () => {
           <ul>{/* Eventually the answers will be displayed here*/}</ul>
           <button type="submit">Submit Poll</button>
         </form>
-        <PollSubmitted />
+        {/* <PollSubmitted /> */}
       </div>
     </Container>
   );
