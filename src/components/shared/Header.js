@@ -19,11 +19,13 @@ const Header = () => {
 export default Header;
 
 const Container = styled.header`
+  background-color: white;
   h1 {
     font-size: 4rem;
     color: ${colours.darkblue};
     img {
       height: 30px;
+      margin-right: 5px;
     }
   }
 `;
