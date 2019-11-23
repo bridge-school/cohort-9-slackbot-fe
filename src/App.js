@@ -6,9 +6,9 @@ import { createGlobalStyle } from "styled-components";
 import { Normalize } from "styled-normalize";
 
 import Header from "./components/shared/Header";
-import Form from "./components/Form/Form";
-import Homepage from "./components/Home/Homepage";
-import Results from "./components/Results";
+import { NewPollForm } from "./components/NewPoll";
+import { Homepage } from "./components/Home";
+import Results from "./components/Results/Results";
 
 const App = () => {
   useEffect(() => {
@@ -25,7 +25,7 @@ const App = () => {
       <Router>
         <Switch>
           <Route exact path="/" component={Homepage} />
-          <Route path="/new-poll" component={Form} />
+          <Route path="/new-poll" component={NewPollForm} />
           <Route path="/results" component={Results} />
         </Switch>
       </Router>

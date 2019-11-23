@@ -1,21 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import colours from "../../assets/colours";
-import SelectionOfChannels from "./SelectionOfChannels";
-// import PollSubmitted from "../PollSubmitted";
-// import { request } from "../../backend-request/index";
+import { SelectionOfChannels } from "./SelectionOfChannels";
+import PollSubmitted from "../PollSubmitted/PollSubmitted";
 
-// Eventually we will get the channels data from our backend, here is some dummy data:
-
-const Form = () => {
+export const NewPollForm = () => {
   const [channels, setChannels] = useState([]);
   useEffect(() => {
-    console.log("hey");
     fetch("http://localhost:8001/channels")
       .then(res => res.json())
       .then(data => setChannels(data))
       .catch(error => console.log("error: ", error));
   }, []);
+
   return (
     <Container>
       <div className="wrapper">
@@ -46,8 +43,6 @@ const Form = () => {
     </Container>
   );
 };
-
-export default Form;
 
 const Container = styled.section`
   padding: 50px 0;
