@@ -1,10 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import PreviousPolls from "./PreviousPolls";
+import { PreviousPolls } from "./PreviousPolls";
 import colours from "../../assets/colours";
 
-const Homepage = () => {
+export const Homepage = () => {
   return (
     <Main>
       <div className="wrapper">
@@ -14,8 +14,6 @@ const Homepage = () => {
     </Main>
   );
 };
-
-export default Homepage;
 
 const Main = styled.main`
   background-color: ${colours.lightgrey};

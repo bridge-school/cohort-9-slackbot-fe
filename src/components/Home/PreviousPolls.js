@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-const PreviousPolls = () => {
+export const PreviousPolls = () => {
   return (
     <Container>
       <h2>Previous polls</h2>
@@ -32,8 +32,6 @@ const PreviousPolls = () => {
     </Container>
   );
 };
-
-export default PreviousPolls;
 
 const Container = styled.section`
   padding: 50px 0;
