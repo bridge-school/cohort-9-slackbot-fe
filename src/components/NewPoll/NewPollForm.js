@@ -4,10 +4,16 @@ import colours from "../../assets/colours";
 import { SelectionOfChannels } from "./SelectionOfChannels";
 import PollSubmitted from "../PollSubmitted/PollSubmitted";
 
+const API_CHANNELS =
+  process.env.NODE_ENV === "development"
+    ? process.env.REACT_APP_API_CHANNELS
+    : `http://${process.env.REACT_APP_PROJECT_NAME}-backend.bridgeschoolapp.io`;
+
 export const NewPollForm = () => {
   const [channels, setChannels] = useState([]);
+
   useEffect(() => {
-    fetch("http://localhost:8001/channels")
+    fetch(API_CHANNELS)
       .then(res => res.json())
       .then(data => setChannels(data))
       .catch(error => console.log("error: ", error));
