@@ -1,18 +1,24 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import colours from "../../assets/colours";
 import { SelectionOfChannels } from "./SelectionOfChannels";
 import { Link } from "react-router-dom";
+import { ReactComponent as Trash } from "../../assets/trash.svg";
+
+console.log(`Hey : ${process.env.REACT_APP_API_CHANNELS}`);
 
 const API_CHANNELS =
   process.env.NODE_ENV === "development"
-    ? process.env.REACT_APP_API_CHANNELS
+    ? // ? process.env.REACT_APP_API_CHANNELS
+      `http://localhost:8001/channels`
     : `http://${process.env.REACT_APP_PROJECT_NAME}-backend.bridgeschoolapp.io`;
 
 export const NewPollForm = () => {
+  // Declare a new state variable, which we'll call "count"
+  const [responses, setResponses] = useState(["1", "2", "3"]);
 
-  const handleSubmitPoll = e => {
-    e.preventDefault();
+  const handleSubmitPoll = event => {
+    event.preventDefault();
   };
 
   const [channels, setChannels] = useState([]);
@@ -24,6 +30,22 @@ export const NewPollForm = () => {
       .catch(error => console.log("error: ", error));
   }, []);
 
+  const deleteResponse = (event, index) => {
+    event.preventDefault();
+    const _responses = [...responses];
+    _responses.splice(index, 1);
+    setResponses(_responses);
+  };
+
+  const handleResponseChange = event => {
+    const _responses = [...responses];
+    _responses[event.target.dataset.id] = event.target.value;
+    setResponses(_responses);
+  };
+
+  const doThat = () => {
+    setResponses([...responses, ""]);
+  };
 
   return (
     <Container>
@@ -33,24 +55,43 @@ export const NewPollForm = () => {
           <label htmlFor="question">Question:</label>
           <input type="text" id="question"></input>
 
+          {responses.map((ele, index) => {
+            return (
+              <React.Fragment>
+                <label>Responses</label>
+                <input
+                  onChange={handleResponseChange}
+                  data-id={index}
+                  type="text"
+                  value={ele}
+                  className="leftie"
+                />
+                <Trash
+                  onClick={e => {
+                    deleteResponse(e, index);
+                  }}
+                  className="trash"
+                />
+                <br />
+              </React.Fragment>
+            );
+          })}
+
+          <button onClick={doThat} className="addAnswer">
+            + Add another resp
+          </button>
+
           <label htmlFor="userGroup">User Group:</label>
           <select id="userGroup">
             <option value="" defaultValue disabled hidden>
               Choose a channel
             </option>
-
             {channels.map(({ name, id }) => (
               <SelectionOfChannels channel={name} key={id} />
             ))}
           </select>
-
-          <label htmlFor="addAnswer">Answer:</label>
-          <input type="text" id="addAnswer" />
-          <button className="addAnswer">+ Add answer</button>
-          <ul>{/* Eventually the answers will be displayed here*/}</ul>
           <Link to="/poll-submitted">Submit Poll</Link>
         </form>
-
       </div>
     </Container>
   );
@@ -60,6 +101,14 @@ const Container = styled.section`
   padding: 50px 0;
   background-color: ${colours.lightgrey};
   form {
+    .leftie {
+      display: inline-block;
+    }
+    .trash {
+      width: 3rem;
+      height: 3rem;
+      cursor: pointer;
+    }
     font-size: 1.8rem;
     h2 {
       font-size: 3rem;
@@ -80,6 +129,9 @@ const Container = styled.section`
     }
     input#question {
       width: 500px;
+    }
+    trash-icon {
+      font-size: 5px;
     }
     input#addAnswer {
       width: 250px;
