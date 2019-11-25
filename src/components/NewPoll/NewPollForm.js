@@ -4,6 +4,7 @@ import colours from "../../assets/colours";
 import { SelectionOfChannels } from "./SelectionOfChannels";
 import { Link } from "react-router-dom";
 import { ReactComponent as Trash } from "../../assets/trash.svg";
+import { createNewPoll } from "../../redux/actions.js";
 
 console.log(`Hey : ${process.env.REACT_APP_API_CHANNELS}`);
 
@@ -16,12 +17,14 @@ const API_CHANNELS =
 export const NewPollForm = () => {
   // Declare a new state variable, which we'll call "count"
   const [responses, setResponses] = useState(["1", "2", "3"]);
+  const [question, setQuestion] = useState("");
+  const [channels, setChannels] = useState([]);
+  const [selectedChannel, setSelectedChannel] = useState("Choose a channel");
 
   const handleSubmitPoll = event => {
     event.preventDefault();
+    // setState();
   };
-
-  const [channels, setChannels] = useState([]);
 
   useEffect(() => {
     fetch(API_CHANNELS)
@@ -43,7 +46,7 @@ export const NewPollForm = () => {
     setResponses(_responses);
   };
 
-  const doThat = () => {
+  const handleAddAnotherResponse = () => {
     setResponses([...responses, ""]);
   };
 
@@ -53,7 +56,12 @@ export const NewPollForm = () => {
         <h2>Create New Poll</h2>
         <form onSubmit={handleSubmitPoll}>
           <label htmlFor="question">Question:</label>
-          <input type="text" id="question"></input>
+          <input
+            type="text"
+            id="question"
+            value={question}
+            onChange={e => setQuestion(e.target.value)}
+          ></input>
 
           {responses.map((ele, index) => {
             return (
@@ -77,15 +85,16 @@ export const NewPollForm = () => {
             );
           })}
 
-          <button onClick={doThat} className="addAnswer">
+          <button onClick={handleAddAnotherResponse} className="addAnswer">
             + Add another resp
           </button>
 
           <label htmlFor="userGroup">User Group:</label>
-          <select id="userGroup">
-            <option value="" defaultValue disabled hidden>
-              Choose a channel
-            </option>
+          <select
+            id="userGroup"
+            onChange={e => setSelectedChannel(e.target.value)}
+          >
+            <option value={selectedChannel} defaultValue disabled hidden />
             {channels.map(({ name, id }) => (
               <SelectionOfChannels channel={name} key={id} />
             ))}
