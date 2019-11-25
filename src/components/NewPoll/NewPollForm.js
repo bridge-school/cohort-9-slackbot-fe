@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import colours from "../../assets/colours";
 import { SelectionOfChannels } from "./SelectionOfChannels";
-import PollSubmitted from "../PollSubmitted/PollSubmitted";
+import { Link } from "react-router-dom";
 
 const API_CHANNELS =
   process.env.NODE_ENV === "development"
@@ -10,6 +10,11 @@ const API_CHANNELS =
     : `http://${process.env.REACT_APP_PROJECT_NAME}-backend.bridgeschoolapp.io`;
 
 export const NewPollForm = () => {
+
+  const handleSubmitPoll = e => {
+    e.preventDefault();
+  };
+
   const [channels, setChannels] = useState([]);
 
   useEffect(() => {
@@ -19,11 +24,12 @@ export const NewPollForm = () => {
       .catch(error => console.log("error: ", error));
   }, []);
 
+
   return (
     <Container>
       <div className="wrapper">
         <h2>Create New Poll</h2>
-        <form action="">
+        <form onSubmit={handleSubmitPoll}>
           <label htmlFor="question">Question:</label>
           <input type="text" id="question"></input>
 
@@ -42,9 +48,9 @@ export const NewPollForm = () => {
           <input type="text" id="addAnswer" />
           <button className="addAnswer">+ Add answer</button>
           <ul>{/* Eventually the answers will be displayed here*/}</ul>
-          <button type="submit">Submit Poll</button>
+          <Link to="/poll-submitted">Submit Poll</Link>
         </form>
-        {/* <PollSubmitted /> */}
+
       </div>
     </Container>
   );
@@ -91,17 +97,17 @@ const Container = styled.section`
     button.addAnswer:hover {
       background-color: ${colours.pink};
     }
-    button[type="submit"] {
+    a {
       font-size: 2rem;
-      margin-top: 45px;
       padding: 10px 45px;
       background-color: ${colours.green};
       color: white;
-      border: transparent;
       border-radius: 2px;
+      text-decoration: none;
+      font-weight: 700;
       transition: 0.2s;
     }
-    button:hover {
+    a:hover {
       background-color: ${colours.darkblue};
     }
   }

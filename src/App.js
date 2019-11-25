@@ -9,6 +9,7 @@ import Header from "./components/shared/Header";
 import { NewPollForm } from "./components/NewPoll";
 import { Homepage } from "./components/Home";
 import Results from "./components/Results/Results";
+import PollSubmitted from "./components/PollSubmitted/PollSubmitted";
 
 const App = () => {
   useEffect(() => {
@@ -27,6 +28,7 @@ const App = () => {
           <Route exact path="/" component={Homepage} />
           <Route path="/new-poll" component={NewPollForm} />
           <Route path="/results" component={Results} />
+          <Route path="/poll-submitted" component={PollSubmitted} />
         </Switch>
       </Router>
     </div>
