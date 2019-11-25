@@ -4,18 +4,20 @@ import colours from "../../assets/colours";
 import { SelectionOfChannels } from "./SelectionOfChannels";
 import PollSubmitted from "../PollSubmitted/PollSubmitted";
 
-// Eventually we will get the channels data from our backend, here is some dummy data:
-// const channels = ["cohort9-students", "general", "help-me"];
+const API_CHANNELS =
+  process.env.NODE_ENV === "development"
+    ? process.env.REACT_APP_API_CHANNELS
+    : `http://${process.env.REACT_APP_PROJECT_NAME}-backend.bridgeschoolapp.io`;
 
 export const NewPollForm = () => {
-  const channels = [];
-  // const [channels, setChannels] = useState([]);
+  const [channels, setChannels] = useState([]);
 
-  // useEffect(() => {
-  //   fetch(`http://localhost:8001/channels`)
-  //     .then(res => res.json())
-  //     .then(data => console.log(data));
-  // }, []);
+  useEffect(() => {
+    fetch(API_CHANNELS)
+      .then(res => res.json())
+      .then(data => setChannels(data))
+      .catch(error => console.log("error: ", error));
+  }, []);
 
   return (
     <Container>
@@ -27,12 +29,12 @@ export const NewPollForm = () => {
 
           <label htmlFor="userGroup">User Group:</label>
           <select id="userGroup">
-            <option value="" selected disabled hidden>
+            <option value="" defaultValue disabled hidden>
               Choose a channel
             </option>
 
-            {channels.map((channel, idx) => (
-              <SelectionOfChannels channel={channel} key={idx} />
+            {channels.map(({ name, id }) => (
+              <SelectionOfChannels channel={name} key={id} />
             ))}
           </select>
 
@@ -42,7 +44,7 @@ export const NewPollForm = () => {
           <ul>{/* Eventually the answers will be displayed here*/}</ul>
           <button type="submit">Submit Poll</button>
         </form>
-        <PollSubmitted />
+        {/* <PollSubmitted /> */}
       </div>
     </Container>
   );
