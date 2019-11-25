@@ -13,7 +13,7 @@ const PollSubmitted = () => {
     <Container>
       <div className="wrapper">
         <h2>Your poll has been submitted</h2>
-        <p roll="img" aria-label="celebration" className="emoji">
+        <p role="img" aria-label="celebration" className="emoji">
           🎉
         </p>
         <Link to="/results">See Results</Link>&emsp;
@@ -22,6 +22,7 @@ const PollSubmitted = () => {
         </Link>
       </div>
     </Container>
+
   );
 };
 
