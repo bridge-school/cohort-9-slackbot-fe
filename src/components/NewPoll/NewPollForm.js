@@ -2,9 +2,10 @@ import React, { useState, useEffect, useCallback } from "react";
 import styled from "styled-components";
 import colours from "../../assets/colours";
 import { SelectionOfChannels } from "./SelectionOfChannels";
-import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { ReactComponent as Trash } from "../../assets/trash.svg";
 import { useSelector, useDispatch } from "react-redux"; // hooks provided by react-redux;
+import * as actions from "../../redux/actions";
 
 const API_CHANNELS =
   process.env.NODE_ENV === "development"
@@ -12,7 +13,10 @@ const API_CHANNELS =
     : `http://${process.env.REACT_APP_PROJECT_NAME}-backend.bridgeschoolapp.io`;
 
 export const NewPollForm = () => {
+  const history = useHistory();
+
   const [channels, setChannels] = useState([]);
+  const [error, setError] = useState(false);
 
   //Get your data from the store
   const question = useSelector(state => state.question);
@@ -22,42 +26,49 @@ export const NewPollForm = () => {
   //dispatch changes to store.
   const dispatch = useDispatch();
 
-  const updateQuestion = useCallback(
-    newQuestion =>
-      dispatch({
-        type: "UPDATE_QUESTION",
-        data: newQuestion
-      }),
-    [dispatch]
-  );
+  const updateQuestion = newQuestion =>
+    dispatch(actions.updateQuestion(newQuestion));
 
   // using useCallback from react to wrap useDispatch of react-redux , useCallback is an overkill for now , but if we are to pass updateAnswers to a child component it is better to wrap it as given to prevent child component rerendering
-  const updateAnswers = useCallback(
-    newAnswer =>
-      dispatch({
-        type: "UPDATE_ANSWERS",
-        data: newAnswer
-      }),
-    [dispatch]
-  );
+  const updateAnswers = newAnswer =>
+    dispatch(actions.updateResponses(newAnswer));
 
-  const updateChannel = useCallback(
-    newChannel =>
-      dispatch({
-        type: "UPDATE_CHANNEL",
-        data: newChannel
-      }),
-    [dispatch]
-  );
+  const updateChannel = newChannel =>
+    dispatch(actions.updateChannel(newChannel));
 
   const handleSubmitPoll = event => {
     event.preventDefault();
+
+    let isResponseValid = responses.length >= 2;
+    responses.forEach(response => {
+      if (isResponseValid && response == "") {
+        isResponseValid = false;
+      }
+    });
+
     // setState();
+    if (question == "" || !isResponseValid || channel == "") {
+      // but you can use a location instead
+      setError(true);
+      console.log("Make an error message for each box below");
+    } else {
+      setError(false);
+      history.push("/poll-submitted");
+    }
   };
 
   useEffect(() => {
     fetch(API_CHANNELS)
       .then(res => res.json())
+      .then(data => {
+        const _data = [
+          {
+            name: "Select a channel",
+            id: 0
+          }
+        ];
+        return _data.concat(data);
+      })
       .then(data => setChannels(data))
       .catch(error => {
         console.log("error: ", error);
@@ -103,6 +114,7 @@ export const NewPollForm = () => {
                 <label>Response {index + 1}</label>
                 <input
                   onChange={handleResponseChange}
+                  onClick={() => {}}
                   data-id={index}
                   type="text"
                   value={ele}
@@ -125,12 +137,18 @@ export const NewPollForm = () => {
 
           <label htmlFor="userGroup">User Group:</label>
           <select id="userGroup" onChange={e => updateChannel(e.target.value)}>
-            <option value={channel} hidden />
-            {channels.map(({ name, id }) => (
-              <SelectionOfChannels channel={name} key={id} />
+            {channels.map(({ name, id }, index) => (
+              <SelectionOfChannels channel={name} key={id} index={index} />
             ))}
           </select>
-          <Link to="/poll-submitted">Submit Poll</Link>
+          {error && (
+            <p className="error">
+              Please fill out all the information, with at least two responses
+            </p>
+          )}
+          <button type="submit" to="/poll-submitted">
+            Submit Poll
+          </button>
         </form>
       </div>
     </Container>
@@ -190,7 +208,7 @@ const Container = styled.section`
     button.addAnswer:hover {
       background-color: ${colours.pink};
     }
-    a {
+    button[type="submit"] {
       font-size: 2rem;
       padding: 10px 45px;
       background-color: ${colours.green};
@@ -200,7 +218,7 @@ const Container = styled.section`
       font-weight: 700;
       transition: 0.2s;
     }
-    a:hover {
+    button[type="submit"]:hover {
       background-color: ${colours.darkblue};
     }
   }
