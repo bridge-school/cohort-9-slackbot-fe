@@ -1,25 +1,54 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import styled from "styled-components";
 import colours from "../../assets/colours";
 import { SelectionOfChannels } from "./SelectionOfChannels";
 import { Link } from "react-router-dom";
 import { ReactComponent as Trash } from "../../assets/trash.svg";
-import { createNewPoll } from "../../redux/actions.js";
-
-console.log(`Hey : ${process.env.REACT_APP_API_CHANNELS}`);
+import { useSelector, useDispatch } from "react-redux"; // hooks provided by react-redux;
 
 const API_CHANNELS =
   process.env.NODE_ENV === "development"
-    ? // ? process.env.REACT_APP_API_CHANNELS
-      `http://localhost:8001/channels`
+    ? process.env.REACT_APP_API_CHANNELS
     : `http://${process.env.REACT_APP_PROJECT_NAME}-backend.bridgeschoolapp.io`;
 
 export const NewPollForm = () => {
-  // Declare a new state variable, which we'll call "count"
-  const [responses, setResponses] = useState(["1", "2", "3"]);
-  const [question, setQuestion] = useState("");
   const [channels, setChannels] = useState([]);
-  const [selectedChannel, setSelectedChannel] = useState("Choose a channel");
+
+  //Get your data from the store
+  const kwestion = useSelector(state => state.question);
+  const respunsez = useSelector(state => state.responses);
+  const sannel = useSelector(state => state.channel);
+
+  //dispatch changes to store.
+  const dispatch = useDispatch();
+
+  const updateQuestion = useCallback(
+    newQuestion =>
+      dispatch({
+        type: "UPDATE_QUESTION",
+        data: newQuestion
+      }),
+    [dispatch]
+  );
+
+  // using useCallback from react to wrap useDispatch of react-redux , useCallback is an overkill for now , but if we are to pass updateAnswers to a child component it is better to wrap it as given to prevent child component rerendering
+  const updateAnswers = useCallback(
+    newAnswer =>
+      dispatch({
+        type: "UPDATE_ANSWERS",
+        data: newAnswer
+      }),
+    [dispatch]
+  );
+
+  const updateChannel = useCallback(
+    newChannel =>
+      dispatch({
+        type: "UPDATE_CHANNEL",
+        data: newChannel
+      }),
+    [dispatch]
+  );
 
   const handleSubmitPoll = event => {
     event.preventDefault();
@@ -30,24 +59,28 @@ export const NewPollForm = () => {
     fetch(API_CHANNELS)
       .then(res => res.json())
       .then(data => setChannels(data))
-      .catch(error => console.log("error: ", error));
+      .catch(error => {
+        console.log("error: ", error);
+      });
   }, []);
 
   const deleteResponse = (event, index) => {
     event.preventDefault();
-    const _responses = [...responses];
+    const _responses = [...respunsez];
     _responses.splice(index, 1);
-    setResponses(_responses);
+    // setResponses(_responses);
+    updateAnswers(_responses);
   };
 
   const handleResponseChange = event => {
-    const _responses = [...responses];
+    const _responses = [...respunsez];
     _responses[event.target.dataset.id] = event.target.value;
-    setResponses(_responses);
+    // setResponses(_responses);
+    updateAnswers(_responses);
   };
 
   const handleAddAnotherResponse = () => {
-    setResponses([...responses, ""]);
+    updateAnswers([...respunsez, ""]);
   };
 
   return (
@@ -59,11 +92,11 @@ export const NewPollForm = () => {
           <input
             type="text"
             id="question"
-            value={question}
-            onChange={e => setQuestion(e.target.value)}
+            value={kwestion}
+            onChange={e => updateQuestion(e.target.value)}
           ></input>
 
-          {responses.map((ele, index) => {
+          {respunsez.map((ele, index) => {
             return (
               <React.Fragment>
                 <label>Responses</label>
@@ -90,11 +123,8 @@ export const NewPollForm = () => {
           </button>
 
           <label htmlFor="userGroup">User Group:</label>
-          <select
-            id="userGroup"
-            onChange={e => setSelectedChannel(e.target.value)}
-          >
-            <option value={selectedChannel} defaultValue disabled hidden />
+          <select id="userGroup" onChange={e => updateChannel(e.target.value)}>
+            <option value={sannel} disabled hidden />
             {channels.map(({ name, id }) => (
               <SelectionOfChannels channel={name} key={id} />
             ))}
