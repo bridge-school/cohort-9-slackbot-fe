@@ -1,13 +1,13 @@
-// import { combineReducers } from "redux";
-import { CREATE_NEW_POLL } from "./actions.js";
-
-// export default combineReducers({
-//   player
-// });
+import {
+  CREATE_NEW_POLL,
+  UPDATE_QUESTION,
+  UPDATE_ANSWERS,
+  UPDATE_CHANNEL
+} from "./actions.js";
 
 const initialState = {
-  question: "Type your question here...",
-  responses: ['a','b','c'],
+  question: "",
+  responses: ["", ""],
   channel: ""
 };
 
@@ -20,17 +20,17 @@ const reducer = (state = initialState, action) => {
         responses: action.responses,
         channel: action.channel
       };
-    case "UPDATE_QUESTION":
+    case UPDATE_QUESTION:
       return {
         ...state,
         question: action.data
       };
-    case "UPDATE_ANSWERS":
+    case UPDATE_ANSWERS:
       return {
         ...state,
         responses: action.data
       };
-    case "UPDATE_CHANNEL":
+    case UPDATE_CHANNEL:
       return {
         ...state,
         channel: action.data

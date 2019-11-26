@@ -15,9 +15,9 @@ export const NewPollForm = () => {
   const [channels, setChannels] = useState([]);
 
   //Get your data from the store
-  const kwestion = useSelector(state => state.question);
-  const respunsez = useSelector(state => state.responses);
-  const sannel = useSelector(state => state.channel);
+  const question = useSelector(state => state.question);
+  const responses = useSelector(state => state.responses);
+  const channel = useSelector(state => state.channel);
 
   //dispatch changes to store.
   const dispatch = useDispatch();
@@ -66,21 +66,21 @@ export const NewPollForm = () => {
 
   const deleteResponse = (event, index) => {
     event.preventDefault();
-    const _responses = [...respunsez];
+    const _responses = [...responses];
     _responses.splice(index, 1);
     // setResponses(_responses);
     updateAnswers(_responses);
   };
 
   const handleResponseChange = event => {
-    const _responses = [...respunsez];
+    const _responses = [...responses];
     _responses[event.target.dataset.id] = event.target.value;
     // setResponses(_responses);
     updateAnswers(_responses);
   };
 
   const handleAddAnotherResponse = () => {
-    updateAnswers([...respunsez, ""]);
+    updateAnswers([...responses, ""]);
   };
 
   return (
@@ -92,14 +92,15 @@ export const NewPollForm = () => {
           <input
             type="text"
             id="question"
-            value={kwestion}
+            value={question}
             onChange={e => updateQuestion(e.target.value)}
+            placeholder="Type in your question..."
           ></input>
 
-          {respunsez.map((ele, index) => {
+          {responses.map((ele, index) => {
             return (
               <React.Fragment>
-                <label>Responses</label>
+                <label>Response {index + 1}</label>
                 <input
                   onChange={handleResponseChange}
                   data-id={index}
@@ -124,7 +125,7 @@ export const NewPollForm = () => {
 
           <label htmlFor="userGroup">User Group:</label>
           <select id="userGroup" onChange={e => updateChannel(e.target.value)}>
-            <option value={sannel} disabled hidden />
+            <option value={channel} hidden />
             {channels.map(({ name, id }) => (
               <SelectionOfChannels channel={name} key={id} />
             ))}
@@ -184,6 +185,7 @@ const Container = styled.section`
       border-radius: 3px;
       padding: 4px 10px;
       transition: 0.2s;
+      margin-bottom: 3rem;
     }
     button.addAnswer:hover {
       background-color: ${colours.pink};
