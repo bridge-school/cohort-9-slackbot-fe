@@ -1,16 +1,11 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import colours from "../../assets/colours";
 import { SelectionOfChannels } from "./SelectionOfChannels";
 import { Link } from "react-router-dom";
-
-const API_CHANNELS =
-  process.env.NODE_ENV === "development"
-    ? process.env.REACT_APP_API_CHANNELS
-    : `http://${process.env.REACT_APP_PROJECT_NAME}-backend.bridgeschoolapp.io`;
+import { API_BASE_URL } from "../../backend-request/index";
 
 export const NewPollForm = () => {
-
   const handleSubmitPoll = e => {
     e.preventDefault();
   };
@@ -18,12 +13,11 @@ export const NewPollForm = () => {
   const [channels, setChannels] = useState([]);
 
   useEffect(() => {
-    fetch(API_CHANNELS)
+    fetch(API_BASE_URL + "/channels")
       .then(res => res.json())
       .then(data => setChannels(data))
       .catch(error => console.log("error: ", error));
   }, []);
-
 
   return (
     <Container>
@@ -50,7 +44,6 @@ export const NewPollForm = () => {
           <ul>{/* Eventually the answers will be displayed here*/}</ul>
           <Link to="/poll-submitted">Submit Poll</Link>
         </form>
-
       </div>
     </Container>
   );
