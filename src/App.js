@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { request } from "./backend-request";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
-import { createGlobalStyle } from "styled-components";
+import { createGlobalStyle, inject } from "styled-components";
 import { Normalize } from "styled-normalize";
 
 import Header from "./components/shared/Header";
@@ -49,14 +49,15 @@ export default connect(mapStateToProps)(App);
 // export default App;
 
 const GlobalStyles = createGlobalStyle`
- html {
-  font-size: 62.5%;
-}
-body {
   @import url("https://fonts.googleapis.com/css?family=Open+Sans:400,700&display=swap");
-  font-family: "Open Sans", sans-serif;
-  font-size: 1.6rem;
-}
+
+  html {
+    font-size: 62.5%;
+  }
+  body {
+    font-family: "Open Sans", sans-serif;
+    font-size: 1.6rem;
+  }
 .wrapper {
   width: 80%;
   max-width: 900px;
