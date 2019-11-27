@@ -10,6 +10,7 @@ import { NewPollForm } from "./components/NewPoll";
 import { Homepage } from "./components/Home";
 import Results from "./components/Results/Results";
 import PollSubmitted from "./components/PollSubmitted/PollSubmitted";
+import { connect } from "react-redux";
 
 const App = () => {
   useEffect(() => {
@@ -35,7 +36,17 @@ const App = () => {
   );
 };
 
-export default App;
+const mapStateToProps = state => {
+  const reduxState = state;
+  return { reduxState };
+};
+
+// const mapDispatchToProps = dispatch => ({
+//   setQuestion: dispatch(actions.)
+// })
+
+export default connect(mapStateToProps)(App);
+// export default App;
 
 const GlobalStyles = createGlobalStyle`
  html {
