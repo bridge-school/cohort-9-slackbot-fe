@@ -6,15 +6,11 @@ import { useHistory } from "react-router-dom";
 import { ReactComponent as Trash } from "../../assets/trash.svg";
 import { useSelector, useDispatch } from "react-redux"; // hooks provided by react-redux;
 import * as actions from "../../redux/actions";
-
-const API_CHANNELS =
-  process.env.NODE_ENV === "development"
-    ? process.env.REACT_APP_API_CHANNELS
-    : `http://${process.env.REACT_APP_PROJECT_NAME}-backend.bridgeschoolapp.io`;
+import { Link } from "react-router-dom";
+import { API_BASE_URL } from "../../backend-request/index";
 
 export const NewPollForm = () => {
   const history = useHistory();
-
   const [channels, setChannels] = useState([]);
   const [error, setError] = useState(false);
 
@@ -58,7 +54,7 @@ export const NewPollForm = () => {
   };
 
   useEffect(() => {
-    fetch(API_CHANNELS)
+    fetch(API_BASE_URL + "/channels")
       .then(res => res.json())
       .then(data => {
         const _data = [
@@ -74,6 +70,7 @@ export const NewPollForm = () => {
         console.log("error: ", error);
       });
   }, []);
+
 
   const deleteResponse = (event, index) => {
     event.preventDefault();
@@ -93,6 +90,7 @@ export const NewPollForm = () => {
   const handleAddAnotherResponse = () => {
     updateAnswers([...responses, ""]);
   };
+
 
   return (
     <Container>
