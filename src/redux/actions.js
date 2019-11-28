@@ -3,6 +3,7 @@ export const UPDATE_QUESTION = "UPDATE_QUESTION";
 export const UPDATE_ANSWERS = "UPDATE_ANSWERS";
 export const UPDATE_CHANNEL = "UPDATE_CHANNEL";
 export const UPDATE_CHANNEL_ID = "UPDATE_CHANNEL_ID";
+export const UPDATE_CHANNEL_SIZE = "UPDATE_CHANNEL_SIZE";
 
 export const updateQuestion = newQuestion => ({
   type: UPDATE_QUESTION,
@@ -22,4 +23,9 @@ export const updateChannel = newChannel => ({
 export const updateChannelID = newChannelID => ({
   type: UPDATE_CHANNEL_ID,
   data: newChannelID
+});
+
+export const updateChannelSize = newChannelSize => ({
+  type: UPDATE_CHANNEL_SIZE,
+  data: newChannelSize
 });
