@@ -19,6 +19,7 @@ export const NewPollForm = () => {
   const responses = useSelector(state => state.responses);
   const channel = useSelector(state => state.channel);
   const channelID = useSelector(state => state.channelID);
+  const channelSize = useSelector(state => state.channelSize);
 
   //dispatch changes to store.
   const dispatch = useDispatch();
@@ -35,6 +36,9 @@ export const NewPollForm = () => {
 
   const updateChannelID = newChannelID =>
     dispatch(actions.updateChannelID(newChannelID));
+
+  const updateChannelSize = newChannelSize =>
+    dispatch(actions.updateChannelSize(newChannelSize));
 
   const handleSubmitPoll = event => {
     event.preventDefault();
@@ -144,8 +148,11 @@ export const NewPollForm = () => {
                 each => each.name == channelName
               );
               const channelID = selectedChannel[0].id;
+              const channelSize = selectedChannel[0].num_members;
+              console.log("selectedChannel[0]", selectedChannel[0]);
               updateChannel(channelName);
               updateChannelID(channelID);
+              updateChannelSize(channelSize);
             }}
           >
             {channels.map(({ name, id }, index) => (

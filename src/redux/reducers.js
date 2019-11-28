@@ -3,14 +3,16 @@ import {
   UPDATE_QUESTION,
   UPDATE_ANSWERS,
   UPDATE_CHANNEL,
-  UPDATE_CHANNEL_ID
+  UPDATE_CHANNEL_ID,
+  UPDATE_CHANNEL_SIZE
 } from "./actions.js";
 
 const initialState = {
   question: "",
   responses: ["", ""],
   channel: "",
-  channelID: ""
+  channelID: "",
+  channelSize: ""
 };
 
 const reducer = (state = initialState, action) => {
@@ -21,7 +23,8 @@ const reducer = (state = initialState, action) => {
         question: action.question,
         responses: action.responses,
         channel: action.channel,
-        channelID: action.channelID
+        channelID: action.channelID,
+        channelSize: action.channelSize
       };
     case UPDATE_QUESTION:
       return {
@@ -42,6 +45,11 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         channelID: action.data
+      };
+    case UPDATE_CHANNEL_SIZE:
+      return {
+        ...state,
+        channelSize: action.data
       };
     default:
       return state;
