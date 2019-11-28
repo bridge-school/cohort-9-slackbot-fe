@@ -18,6 +18,7 @@ export const NewPollForm = () => {
   const question = useSelector(state => state.question);
   const responses = useSelector(state => state.responses);
   const channel = useSelector(state => state.channel);
+  const channelID = useSelector(state => state.channelID);
 
   //dispatch changes to store.
   const dispatch = useDispatch();
@@ -31,6 +32,9 @@ export const NewPollForm = () => {
 
   const updateChannel = newChannel =>
     dispatch(actions.updateChannel(newChannel));
+
+  const updateChannelID = newChannelID =>
+    dispatch(actions.updateChannelID(newChannelID));
 
   const handleSubmitPoll = event => {
     event.preventDefault();
@@ -71,7 +75,6 @@ export const NewPollForm = () => {
       });
   }, []);
 
-
   const deleteResponse = (event, index) => {
     event.preventDefault();
     const _responses = [...responses];
@@ -90,7 +93,6 @@ export const NewPollForm = () => {
   const handleAddAnotherResponse = () => {
     updateAnswers([...responses, ""]);
   };
-
 
   return (
     <Container>
@@ -134,7 +136,18 @@ export const NewPollForm = () => {
           </button>
 
           <label htmlFor="userGroup">User Group:</label>
-          <select id="userGroup" onChange={e => updateChannel(e.target.value)}>
+          <select
+            id="userGroup"
+            onChange={e => {
+              const channelName = e.target.value;
+              const selectedChannel = channels.filter(
+                each => each.name == channelName
+              );
+              const channelID = selectedChannel[0].id;
+              updateChannel(channelName);
+              updateChannelID(channelID);
+            }}
+          >
             {channels.map(({ name, id }, index) => (
               <SelectionOfChannels channel={name} key={id} index={index} />
             ))}

@@ -2,13 +2,15 @@ import {
   CREATE_NEW_POLL,
   UPDATE_QUESTION,
   UPDATE_ANSWERS,
-  UPDATE_CHANNEL
+  UPDATE_CHANNEL,
+  UPDATE_CHANNEL_ID
 } from "./actions.js";
 
 const initialState = {
   question: "",
   responses: ["", ""],
-  channel: ""
+  channel: "",
+  channelID: ""
 };
 
 const reducer = (state = initialState, action) => {
@@ -18,7 +20,8 @@ const reducer = (state = initialState, action) => {
         ...state,
         question: action.question,
         responses: action.responses,
-        channel: action.channel
+        channel: action.channel,
+        channelID: action.channelID
       };
     case UPDATE_QUESTION:
       return {
@@ -34,6 +37,11 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         channel: action.data
+      };
+    case UPDATE_CHANNEL_ID:
+      return {
+        ...state,
+        channelID: action.data
       };
     default:
       return state;
