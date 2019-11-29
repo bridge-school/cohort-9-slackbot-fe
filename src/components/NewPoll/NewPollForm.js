@@ -19,7 +19,6 @@ const NewPollForm = ({
   fetchChannels,
   channels
 }) => {
-  console.log(channels);
   // const [error, setError] = useState(false);
   useEffect(() => {
     fetchChannels();
@@ -145,7 +144,7 @@ const mapDispatchToProps = dispatch => ({
     dispatch(messageAction.updateChannelID(newChannelID)),
   updateChannelSize: newChannelSize =>
     dispatch(messageAction.updateChannelSize(newChannelSize)),
-  fetchChannels: () => dispatch(channelAction.fetchChannelsThunk)
+  fetchChannels: () => dispatch(channelAction.fetchChannelsThunk())
 });
 
 export const ConnectedNewPollForm = connect(
