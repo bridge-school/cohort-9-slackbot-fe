@@ -8,11 +8,14 @@ import {
 } from "./actions.js";
 
 const initialState = {
-  question: "",
-  responses: ["", ""],
-  channel: "",
-  channelID: "",
-  channelSize: ""
+  message: {
+    question: "",
+    responses: ["", ""],
+    channel: "",
+    channelID: "",
+    channelSize: ""
+  },
+  channels: []
 };
 
 const reducer = (state = initialState, action) => {
