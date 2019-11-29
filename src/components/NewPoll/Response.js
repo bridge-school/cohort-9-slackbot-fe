@@ -2,7 +2,13 @@ import React from "react";
 import styled from "styled-components";
 import Trash from "../../assets/trash.svg";
 
-const Response = ({ response, idx, length, updateResponse }) => {
+const Response = ({
+  response,
+  idx,
+  length,
+  updateResponse,
+  deleteResponse
+}) => {
   return (
     <ResponseContainer>
       <label htmlFor={"response" + idx}>Response {idx + 1}</label>
@@ -12,10 +18,10 @@ const Response = ({ response, idx, length, updateResponse }) => {
         value={response}
         onChange={updateResponse}
       />
-
+      {/* If the array is less than 2 items long, don't show delete button. */}
       {length > 2 ? (
-        <button>
-          <img src={Trash} alt="Delete item" />
+        <button onClick={deleteResponse}>
+          <img src={Trash} alt={"Delete response: " + response} value={idx} />
         </button>
       ) : (
         ""
@@ -27,8 +33,9 @@ const Response = ({ response, idx, length, updateResponse }) => {
 export default Response;
 
 const ResponseContainer = styled.div`
-  div {
-    display: flex;
+  input {
+    width: 250px;
+    display: inline-block;
   }
   button {
     width: 30px;

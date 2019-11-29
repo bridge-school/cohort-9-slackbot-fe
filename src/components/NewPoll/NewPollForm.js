@@ -19,7 +19,7 @@ const NewPollForm = ({
   message
 }) => {
   const [channels, setChannels] = useState([]);
-  const [error, setError] = useState(false);
+  // const [error, setError] = useState(false);
 
   // Refactor this fetch to a Thunk 🐤:
 
@@ -35,38 +35,42 @@ const NewPollForm = ({
   const handleSubmitPoll = e => {
     e.preventDefault();
 
-    let isResponseValid = message.responses.length >= 2;
-    message.responses.forEach(response => {
-      if (isResponseValid && response === "") {
-        isResponseValid = false;
-      }
-    });
+    // let isResponseValid = message.responses.length >= 2;
+    // message.responses.forEach(response => {
+    //   if (isResponseValid && response === "") {
+    //     isResponseValid = false;
+    //   }
+    // });
 
-    // setState();
-    if (message.question === "" || !isResponseValid || message.channel === "") {
-      // but you can use a location instead
-      setError(true);
-      console.log("Make an error message for each box below");
-    } else {
-      setError(false);
-    }
+    // // setState();
+    // if (message.question === "" || !isResponseValid || message.channel === "") {
+    //   // but you can use a location instead
+    //   setError(true);
+    //   console.log("Make an error message for each box below");
+    // } else {
+    //   setError(false);
+    // }
   };
 
   const updateResponse = e => {
-    // gets the index of the item from the array.
-    // since the input id is unique and is in the format 'response{index}', I've used a regEx to strip it and get only the {index} value.
+    /* 
+     Since the input's id is unique and is in the format 'response{indexNumber}', I've used a regEx to grab the {indexNumber}
+
+      I think we should update this function later passing the string and index, and let the reducer handle updating the array.     
+    */
     const idx = parseInt(e.target.id.match(/\d/g).join(""));
     const _responses = [...message.responses];
     _responses[idx] = e.target.value;
     updateAnswers(_responses);
   };
 
-  // const deleteResponse = (event, index) => {
-  //   event.preventDefault();
-  //   const _responses = [...message.responses];
-  //   _responses.splice(index, 1);
-  //   updateAnswers(_responses);
-  // };
+  const deleteResponse = e => {
+    // Same comment as above, Redux should probably handle updating the array.
+    const idx = parseInt(e.target.attributes.value.value);
+    const _responses = [...message.responses];
+    _responses.splice(idx, 1);
+    updateAnswers(_responses);
+  };
 
   const handleAddAnotherResponse = () => {
     updateAnswers([...message.responses, ""]);
@@ -92,38 +96,9 @@ const NewPollForm = ({
               response={response}
               length={responses.length}
               updateResponse={updateResponse}
+              deleteResponse={deleteResponse}
             />
           ))}
-          <Response
-            key={"response" + 44}
-            idx={44}
-            response={""}
-            length={44}
-            updateResponse={updateResponse}
-          />
-
-          {/* {message.responses.map((response, index) => {
-            return (
-              <React.Fragment key={index}>
-                <label>Response {index + 1}</label>
-                <input
-                  onChange={updateResponse}
-                  data-id={index}
-                  type="text"
-                  value={response}
-                  className="leftie"
-                />
-                <Trash
-                  onClick={e => {
-                    deleteResponse(e, index);
-                  }}
-                  className="trash"
-                />
-                <br />
-              </React.Fragment>
-            );
-          })} */}
-          {/* <Response /> */}
 
           <button onClick={handleAddAnotherResponse} className="addAnswer">
             + Add another resp
@@ -153,11 +128,11 @@ const NewPollForm = ({
               <SelectionOfChannels channel={name} key={id} />
             ))}
           </select>
-          {error && (
+          {/* {error && (
             <p className="error">
               Please fill out all the information, with at least two responses
             </p>
-          )}
+          )} */}
           <button type="submit" to="/poll-submitted">
             Submit Poll
           </button>
@@ -217,17 +192,20 @@ const Container = styled.section`
       border-radius: 2px;
       padding: 4px 0;
     }
+    input {
+      padding: 5px;
+    }
     input#question {
       width: 500px;
     }
     trash-icon {
       font-size: 5px;
     }
-    input#addAnswer {
+    /* input#addAnswer {
       width: 250px;
       display: inline-block;
       margin-right: 5px;
-    }
+    } */
     button.addAnswer {
       background-color: ${colours.lightblue};
       color: white;
