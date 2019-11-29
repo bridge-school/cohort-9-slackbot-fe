@@ -3,7 +3,7 @@ import { message } from "./messageActions";
 const INITIAL_STATE = {
   question: "",
   responses: ["", ""],
-  channel: "",
+  channel: "Select a channel",
   channelID: "",
   channelSize: ""
 };

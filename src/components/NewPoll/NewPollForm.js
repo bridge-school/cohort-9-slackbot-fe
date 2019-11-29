@@ -117,7 +117,7 @@ const NewPollForm = ({
 
           <label htmlFor="userGroup">User Group:</label>
           <select id="userGroup" onChange={handleChannelSelection}>
-            <option disabled defaultValue>
+            <option defaultValue={"Select a channel"} disabled>
               Select a channel
             </option>
             {/* channels */}
