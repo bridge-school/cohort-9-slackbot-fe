@@ -26,7 +26,7 @@ const NewPollForm = ({
   useEffect(() => {
     fetch(API_BASE_URL + "/channels")
       .then(res => res.json())
-      .then(data => setChannels(data))
+      // .then(data => setChannels(data))
       .catch(error => {
         console.log("error: ", error);
       });
@@ -117,9 +117,7 @@ const NewPollForm = ({
 
           <label htmlFor="userGroup">User Group:</label>
           <select id="userGroup" onChange={handleChannelSelection}>
-            <option defaultValue={"Select a channel"} disabled>
-              Select a channel
-            </option>
+            <option defaultValue>Select a channel</option>
             {/* channels */}
             {channels.map(({ name, id }) => (
               <SelectionOfChannels channel={name} key={id} />
