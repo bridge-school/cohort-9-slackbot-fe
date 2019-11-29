@@ -1,82 +1,49 @@
-// react & redux
-import React, { useState, useEffect, useCallback } from "react";
-import { useHistory } from "react-router-dom";
-import { useSelector, useDispatch, connect } from "react-redux"; // hooks provided by react-redux;
-import * as actions from "../../redux/actions";
+import React, { useState, useEffect } from "react";
+import { connect } from "react-redux";
+import * as actions from "../../redux/messageActions";
 
-// components and information
-import { SelectionOfChannels } from "./SelectionOfChannels";
-import { API_BASE_URL } from "../../backend-request/index";
-
-// styles
 import styled from "styled-components";
 import colours from "../../assets/colours";
 import { ReactComponent as Trash } from "../../assets/trash.svg";
 
-export const NewPollForm = () => {
-  const history = useHistory();
+import { SelectionOfChannels } from "./SelectionOfChannels";
+import Response from "./Response";
+import { API_BASE_URL } from "../../backend-request/index";
+
+const NewPollForm = ({
+  updateQuestion,
+  updateAnswers,
+  updateChannel,
+  updateChannelID,
+  updateChannelSize,
+  message
+}) => {
   const [channels, setChannels] = useState([]);
   const [error, setError] = useState(false);
 
-  //Get your data from the store
-  const question = useSelector(state => state.question);
-  const responses = useSelector(state => state.responses);
-  const channel = useSelector(state => state.channel);
-  const channelID = useSelector(state => state.channelID);
-  const channelSize = useSelector(state => state.channelSize);
+  const handleSubmitPoll = e => {
+    e.preventDefault();
 
-  //dispatch changes to store.
-  const dispatch = useDispatch();
-
-  const updateQuestion = newQuestion =>
-    dispatch(actions.updateQuestion(newQuestion));
-
-  // using useCallback from react to wrap useDispatch of react-redux , useCallback is an overkill for now , but if we are to pass updateAnswers to a child component it is better to wrap it as given to prevent child component rerendering
-  const updateAnswers = newAnswer =>
-    dispatch(actions.updateResponses(newAnswer));
-
-  const updateChannel = newChannel =>
-    dispatch(actions.updateChannel(newChannel));
-
-  const updateChannelID = newChannelID =>
-    dispatch(actions.updateChannelID(newChannelID));
-
-  const updateChannelSize = newChannelSize =>
-    dispatch(actions.updateChannelSize(newChannelSize));
-
-  const handleSubmitPoll = event => {
-    event.preventDefault();
-
-    let isResponseValid = responses.length >= 2;
-    responses.forEach(response => {
-      if (isResponseValid && response == "") {
+    let isResponseValid = message.responses.length >= 2;
+    message.responses.forEach(response => {
+      if (isResponseValid && response === "") {
         isResponseValid = false;
       }
     });
 
     // setState();
-    if (question == "" || !isResponseValid || channel == "") {
+    if (message.question === "" || !isResponseValid || message.channel === "") {
       // but you can use a location instead
       setError(true);
       console.log("Make an error message for each box below");
     } else {
       setError(false);
-      history.push("/poll-submitted");
     }
   };
 
   useEffect(() => {
     fetch(API_BASE_URL + "/channels")
       .then(res => res.json())
-      .then(data => {
-        const _data = [
-          {
-            name: "Select a channel",
-            id: 0
-          }
-        ];
-        return _data.concat(data);
-      })
       .then(data => setChannels(data))
       .catch(error => {
         console.log("error: ", error);
@@ -85,21 +52,19 @@ export const NewPollForm = () => {
 
   const deleteResponse = (event, index) => {
     event.preventDefault();
-    const _responses = [...responses];
+    const _responses = [...message.responses];
     _responses.splice(index, 1);
-    // setResponses(_responses);
     updateAnswers(_responses);
   };
 
   const handleResponseChange = event => {
-    const _responses = [...responses];
+    const _responses = [...message.responses];
     _responses[event.target.dataset.id] = event.target.value;
-    // setResponses(_responses);
     updateAnswers(_responses);
   };
 
   const handleAddAnotherResponse = () => {
-    updateAnswers([...responses, ""]);
+    updateAnswers([...message.responses, ""]);
   };
 
   return (
@@ -111,21 +76,20 @@ export const NewPollForm = () => {
           <input
             type="text"
             id="question"
-            value={question}
+            value={message.question}
             onChange={e => updateQuestion(e.target.value)}
             placeholder="Type in your question..."
           ></input>
 
-          {responses.map((ele, index) => {
+          {/* {message.responses.map((response, index) => {
             return (
-              <React.Fragment>
+              <React.Fragment key={index}>
                 <label>Response {index + 1}</label>
                 <input
                   onChange={handleResponseChange}
-                  onClick={() => {}}
                   data-id={index}
                   type="text"
-                  value={ele}
+                  value={response}
                   className="leftie"
                 />
                 <Trash
@@ -137,7 +101,8 @@ export const NewPollForm = () => {
                 <br />
               </React.Fragment>
             );
-          })}
+          })} */}
+          <Response />
 
           <button onClick={handleAddAnotherResponse} className="addAnswer">
             + Add another resp
@@ -149,7 +114,7 @@ export const NewPollForm = () => {
             onChange={e => {
               const channelName = e.target.value;
               const selectedChannel = channels.filter(
-                each => each.name == channelName
+                each => each.name === channelName
               );
               const channelID = selectedChannel[0].id;
               const channelSize = selectedChannel[0].num_members;
@@ -159,8 +124,12 @@ export const NewPollForm = () => {
               updateChannelSize(channelSize);
             }}
           >
-            {channels.map(({ name, id }, index) => (
-              <SelectionOfChannels channel={name} key={id} index={index} />
+            <option disabled defaultValue>
+              Select a channel
+            </option>
+            {/* channels */}
+            {channels.map(({ name, id }) => (
+              <SelectionOfChannels channel={name} key={id} />
             ))}
           </select>
           {error && (
@@ -176,6 +145,24 @@ export const NewPollForm = () => {
     </Container>
   );
 };
+const mapStateToProps = state => ({
+  message: state.message
+});
+
+const mapDispatchToProps = dispatch => ({
+  updateQuestion: newQuestion => dispatch(actions.updateQuestion(newQuestion)),
+  updateAnswers: newAnswer => dispatch(actions.updateResponses(newAnswer)),
+  updateChannel: newChannel => dispatch(actions.updateChannel(newChannel)),
+  updateChannelID: newChannelID =>
+    dispatch(actions.updateChannelID(newChannelID)),
+  updateChannelSize: newChannelSize =>
+    dispatch(actions.updateChannelSize(newChannelSize))
+});
+
+export const ConnectedNewPollForm = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(NewPollForm);
 
 const Container = styled.section`
   padding: 50px 0;
@@ -195,10 +182,12 @@ const Container = styled.section`
       margin-top: 0;
     }
     label,
-    input,
     select,
     button[type="submit"] {
       display: block;
+    }
+    label {
+      margin-bottom: 3px;
     }
     input,
     select {
