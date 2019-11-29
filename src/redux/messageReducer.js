@@ -1,6 +1,6 @@
 import { message } from "./messageActions";
 
-const INITIAL_STATE = {
+const INITIAL_MESSAGE_STATE = {
   question: "",
   responses: ["", ""],
   channel: "Select a channel",
@@ -8,7 +8,7 @@ const INITIAL_STATE = {
   channelSize: ""
 };
 
-const messageReducer = (state = INITIAL_STATE, action) => {
+const messageReducer = (state = INITIAL_MESSAGE_STATE, action) => {
   switch (action.type) {
     case message.UPDATE_QUESTION:
       return {

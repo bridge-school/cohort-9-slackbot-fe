@@ -1,11 +1,11 @@
 import { channel } from "./channelActions";
 
-export const INITIAL_CHANNEL_STATE = {
+const INITIAL_CHANNEL_STATE = {
   channels: [],
   isLoading: true
 };
 
-export const channelReducer = (state = INITIAL_CHANNEL_STATE, action) => {
+const channelReducer = (state = INITIAL_CHANNEL_STATE, action) => {
   switch (action.type) {
     case channel.SET_IS_CHANNELS_LOADING:
       return { ...state, isLoading: action.data };
@@ -15,3 +15,5 @@ export const channelReducer = (state = INITIAL_CHANNEL_STATE, action) => {
       return state;
   }
 };
+
+export default channelReducer;

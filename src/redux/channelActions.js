@@ -1,4 +1,4 @@
-import { API_BASE_URL } from "../../backend-request/index";
+import { API_BASE_URL } from "../backend-request/index";
 
 export const channel = {
   SET_IS_CHANNELS_LOADING: "SET_IS_CHANNELS_LOADING",

@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import * as actions from "../../redux/messageActions";
+import * as messageAction from "../../redux/messageActions";
+import * as channelAction from "../../redux/channelActions";
 
 import styled from "styled-components";
 import colours from "../../assets/colours";
@@ -14,13 +15,15 @@ const NewPollForm = ({
   updateChannel,
   updateChannelID,
   updateChannelSize,
-  message
+  message,
+  fetchChannels,
+  channels
 }) => {
+  console.log(channels);
   // const [error, setError] = useState(false);
-
   useEffect(() => {
-    // fetch channels thunks goes here
-  }, []);
+    fetchChannels();
+  }, [fetchChannels]);
 
   const handleSubmitPoll = e => {
     e.preventDefault();
@@ -127,17 +130,22 @@ const NewPollForm = ({
   );
 };
 const mapStateToProps = state => ({
-  message: state.message
+  message: state.message,
+  channels: state.channels.channels
 });
 
 const mapDispatchToProps = dispatch => ({
-  updateQuestion: newQuestion => dispatch(actions.updateQuestion(newQuestion)),
-  updateAnswers: newAnswer => dispatch(actions.updateResponses(newAnswer)),
-  updateChannel: newChannel => dispatch(actions.updateChannel(newChannel)),
+  updateQuestion: newQuestion =>
+    dispatch(messageAction.updateQuestion(newQuestion)),
+  updateAnswers: newAnswer =>
+    dispatch(messageAction.updateResponses(newAnswer)),
+  updateChannel: newChannel =>
+    dispatch(messageAction.updateChannel(newChannel)),
   updateChannelID: newChannelID =>
-    dispatch(actions.updateChannelID(newChannelID)),
+    dispatch(messageAction.updateChannelID(newChannelID)),
   updateChannelSize: newChannelSize =>
-    dispatch(actions.updateChannelSize(newChannelSize))
+    dispatch(messageAction.updateChannelSize(newChannelSize)),
+  fetchChannels: () => dispatch(channelAction.fetchChannelsThunk)
 });
 
 export const ConnectedNewPollForm = connect(

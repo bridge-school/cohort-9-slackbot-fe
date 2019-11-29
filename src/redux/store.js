@@ -1,10 +1,12 @@
 import { createStore, combineReducers, compose, applyMiddleware } from "redux";
 import reduxThunk from "redux-thunk";
+
 import messageReducer from "./messageReducer";
+import channelReducer from "./channelReducer";
 
 const rootReducer = combineReducers({
-  message: messageReducer
-  // 🔔 TO ADD --> channels: channelsReducer
+  message: messageReducer,
+  channels: channelReducer
   // 🔔 TO ADD --> archive: archiveReducer
 });
 const store = createStore(
