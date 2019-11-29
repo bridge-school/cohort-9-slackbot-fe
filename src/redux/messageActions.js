@@ -30,5 +30,3 @@ export const updateChannelSize = newChannelSize => ({
   type: message.UPDATE_CHANNEL_SIZE,
   data: newChannelSize
 });
-
-// create fetchChannelsThunk

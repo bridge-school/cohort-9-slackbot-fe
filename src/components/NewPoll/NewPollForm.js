@@ -1,14 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import * as actions from "../../redux/messageActions";
 
 import styled from "styled-components";
 import colours from "../../assets/colours";
-// import { ReactComponent as Trash } from "../../assets/trash.svg";
 
 import { SelectionOfChannels } from "./SelectionOfChannels";
 import Response from "./Response";
-import { API_BASE_URL } from "../../backend-request/index";
 
 const NewPollForm = ({
   updateQuestion,
@@ -18,18 +16,10 @@ const NewPollForm = ({
   updateChannelSize,
   message
 }) => {
-  const [channels, setChannels] = useState([]);
   // const [error, setError] = useState(false);
 
-  // Refactor this fetch to a Thunk 🐤:
-
   useEffect(() => {
-    fetch(API_BASE_URL + "/channels")
-      .then(res => res.json())
-      // .then(data => setChannels(data))
-      .catch(error => {
-        console.log("error: ", error);
-      });
+    // fetch channels thunks goes here
   }, []);
 
   const handleSubmitPoll = e => {

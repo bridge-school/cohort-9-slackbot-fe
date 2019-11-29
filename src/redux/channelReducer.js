@@ -1,13 +1,17 @@
-export const channel = {
-  SET_IS_CHANNELS_LOADING: "SET_IS_CHANNELS_LOADING",
-  SET_CHANNELS_LIST: "SET_CHANNELS_LIST"
+import { channel } from "./channelActions";
+
+export const INITIAL_CHANNEL_STATE = {
+  channels: [],
+  isLoading: true
 };
 
-export const setIsChannelsLoading = (isLoading = false) => ({
-  type: channel.SET_IS_CHANNELS_LOADING,
-  data: isLoading
-});
-export const setChannelList = (channels = []) => ({
-  type: channel.SET_CHANNELS_LIST,
-  data: channels
-});
+export const channelReducer = (state = INITIAL_CHANNEL_STATE, action) => {
+  switch (action.type) {
+    case channel.SET_IS_CHANNELS_LOADING:
+      return { ...state, isLoading: action.data };
+    case channel.SET_CHANNELS_LIST:
+      return { ...state, channels: action.data };
+    default:
+      return state;
+  }
+};
