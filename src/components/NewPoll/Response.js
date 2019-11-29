@@ -2,21 +2,24 @@ import React from "react";
 import styled from "styled-components";
 import Trash from "../../assets/trash.svg";
 
-const Response = ({ i = 0 }) => {
+const Response = ({ response, idx, length, updateResponse }) => {
   return (
     <ResponseContainer>
-      <label htmlFor={"response" + (i + 1)}>Response {i + 1}</label>
-      <div>
-        <input type="text" id={"response" + (i + 1)} />
+      <label htmlFor={"response" + idx}>Response {idx + 1}</label>
+      <input
+        type="text"
+        id={"response" + idx}
+        value={response}
+        onChange={updateResponse}
+      />
 
-        {i > 1 ? (
-          <button>
-            <img src={Trash} alt="Delete item" />
-          </button>
-        ) : (
-          ""
-        )}
-      </div>
+      {length > 2 ? (
+        <button>
+          <img src={Trash} alt="Delete item" />
+        </button>
+      ) : (
+        ""
+      )}
     </ResponseContainer>
   );
 };

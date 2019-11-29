@@ -4,7 +4,7 @@ import * as actions from "../../redux/messageActions";
 
 import styled from "styled-components";
 import colours from "../../assets/colours";
-import { ReactComponent as Trash } from "../../assets/trash.svg";
+// import { ReactComponent as Trash } from "../../assets/trash.svg";
 
 import { SelectionOfChannels } from "./SelectionOfChannels";
 import Response from "./Response";
@@ -20,6 +20,17 @@ const NewPollForm = ({
 }) => {
   const [channels, setChannels] = useState([]);
   const [error, setError] = useState(false);
+
+  // Refactor this fetch to a Thunk 🐤:
+
+  useEffect(() => {
+    fetch(API_BASE_URL + "/channels")
+      .then(res => res.json())
+      .then(data => setChannels(data))
+      .catch(error => {
+        console.log("error: ", error);
+      });
+  }, []);
 
   const handleSubmitPoll = e => {
     e.preventDefault();
@@ -41,27 +52,21 @@ const NewPollForm = ({
     }
   };
 
-  useEffect(() => {
-    fetch(API_BASE_URL + "/channels")
-      .then(res => res.json())
-      .then(data => setChannels(data))
-      .catch(error => {
-        console.log("error: ", error);
-      });
-  }, []);
-
-  const deleteResponse = (event, index) => {
-    event.preventDefault();
+  const updateResponse = e => {
+    // gets the index of the item from the array.
+    // since the input id is unique and is in the format 'response{index}', I've used a regEx to strip it and get only the {index} value.
+    const idx = parseInt(e.target.id.match(/\d/g).join(""));
     const _responses = [...message.responses];
-    _responses.splice(index, 1);
+    _responses[idx] = e.target.value;
     updateAnswers(_responses);
   };
 
-  const handleResponseChange = event => {
-    const _responses = [...message.responses];
-    _responses[event.target.dataset.id] = event.target.value;
-    updateAnswers(_responses);
-  };
+  // const deleteResponse = (event, index) => {
+  //   event.preventDefault();
+  //   const _responses = [...message.responses];
+  //   _responses.splice(index, 1);
+  //   updateAnswers(_responses);
+  // };
 
   const handleAddAnotherResponse = () => {
     updateAnswers([...message.responses, ""]);
@@ -80,13 +85,29 @@ const NewPollForm = ({
             onChange={e => updateQuestion(e.target.value)}
             placeholder="Type in your question..."
           ></input>
+          {message.responses.map((response, idx, responses) => (
+            <Response
+              key={"response" + idx}
+              idx={idx}
+              response={response}
+              length={responses.length}
+              updateResponse={updateResponse}
+            />
+          ))}
+          <Response
+            key={"response" + 44}
+            idx={44}
+            response={""}
+            length={44}
+            updateResponse={updateResponse}
+          />
 
           {/* {message.responses.map((response, index) => {
             return (
               <React.Fragment key={index}>
                 <label>Response {index + 1}</label>
                 <input
-                  onChange={handleResponseChange}
+                  onChange={updateResponse}
                   data-id={index}
                   type="text"
                   value={response}
@@ -102,7 +123,7 @@ const NewPollForm = ({
               </React.Fragment>
             );
           })} */}
-          <Response />
+          {/* <Response /> */}
 
           <button onClick={handleAddAnotherResponse} className="addAnswer">
             + Add another resp
