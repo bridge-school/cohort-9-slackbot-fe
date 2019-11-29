@@ -76,6 +76,17 @@ const NewPollForm = ({
     updateAnswers([...message.responses, ""]);
   };
 
+  const handleChannelSelection = e => {
+    const channelName = e.target.value;
+    const selectedChannel = channels.filter(each => each.name === channelName);
+    const channelID = selectedChannel[0].id;
+    const channelSize = selectedChannel[0].num_members;
+    console.log("selectedChannel[0]", selectedChannel[0]);
+    updateChannel(channelName);
+    updateChannelID(channelID);
+    updateChannelSize(channelSize);
+  };
+
   return (
     <Container>
       <div className="wrapper">
@@ -88,7 +99,7 @@ const NewPollForm = ({
             value={message.question}
             onChange={e => updateQuestion(e.target.value)}
             placeholder="Type in your question..."
-          ></input>
+          />
           {message.responses.map((response, idx, responses) => (
             <Response
               key={"response" + idx}
@@ -105,21 +116,7 @@ const NewPollForm = ({
           </button>
 
           <label htmlFor="userGroup">User Group:</label>
-          <select
-            id="userGroup"
-            onChange={e => {
-              const channelName = e.target.value;
-              const selectedChannel = channels.filter(
-                each => each.name === channelName
-              );
-              const channelID = selectedChannel[0].id;
-              const channelSize = selectedChannel[0].num_members;
-              console.log("selectedChannel[0]", selectedChannel[0]);
-              updateChannel(channelName);
-              updateChannelID(channelID);
-              updateChannelSize(channelSize);
-            }}
-          >
+          <select id="userGroup" onChange={handleChannelSelection}>
             <option disabled defaultValue>
               Select a channel
             </option>
@@ -201,11 +198,7 @@ const Container = styled.section`
     trash-icon {
       font-size: 5px;
     }
-    /* input#addAnswer {
-      width: 250px;
-      display: inline-block;
-      margin-right: 5px;
-    } */
+
     button.addAnswer {
       background-color: ${colours.lightblue};
       color: white;
