@@ -1,13 +1,17 @@
+// react & redux
 import React, { useState, useEffect, useCallback } from "react";
+import { useHistory } from "react-router-dom";
+import { useSelector, useDispatch, connect } from "react-redux"; // hooks provided by react-redux;
+import * as actions from "../../redux/actions";
+
+// components and information
+import { SelectionOfChannels } from "./SelectionOfChannels";
+import { API_BASE_URL } from "../../backend-request/index";
+
+// styles
 import styled from "styled-components";
 import colours from "../../assets/colours";
-import { SelectionOfChannels } from "./SelectionOfChannels";
-import { useHistory } from "react-router-dom";
 import { ReactComponent as Trash } from "../../assets/trash.svg";
-import { useSelector, useDispatch } from "react-redux"; // hooks provided by react-redux;
-import * as actions from "../../redux/actions";
-import { Link } from "react-router-dom";
-import { API_BASE_URL } from "../../backend-request/index";
 
 export const NewPollForm = () => {
   const history = useHistory();
