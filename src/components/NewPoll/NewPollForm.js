@@ -6,6 +6,7 @@ import * as channelAction from "../../redux/channelActions";
 import styled from "styled-components";
 import colours from "../../assets/colours";
 
+import { numberParser } from "../shared/helperFunctions";
 import { SelectionOfChannels } from "./SelectionOfChannels";
 import Response from "./Response";
 
@@ -33,14 +34,14 @@ const NewPollForm = ({
 
       We should probably update this function later so that redux handles updating the array.     
     */
-    const idx = parseInt(e.target.id.match(/\d/g).join(""));
+    const idx = numberParser(e.target.id);
     const _responses = [...message.responses];
     _responses[idx] = e.target.value;
     updateAnswers(_responses);
   };
 
   const deleteResponse = e => {
-    // Again, we should probably let redux  handle updating the array.
+    // Again, we should probably let redux handle updating the array.
     const idx = parseInt(e.target.attributes.value.value);
     const _responses = [...message.responses];
     _responses.splice(idx, 1);
@@ -55,7 +56,6 @@ const NewPollForm = ({
     const selectedChannel = e.target.value;
 
     // Filter the channels for the channel that matches 'selectedChannel' then decontruct it for 'name', 'id' and 'size'
-
     const [{ name, id, size }] = channels.filter(
       ({ name }) => name === selectedChannel
     );
