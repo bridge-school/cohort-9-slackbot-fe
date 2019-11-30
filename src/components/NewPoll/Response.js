@@ -9,8 +9,6 @@ const Response = ({
   updateResponse,
   deleteResponse
 }) => {
-  // RegEx for input, must contain at least 1 non-whitespace character
-  const re = /(?=.*\w).{1,}/;
   return (
     <ResponseContainer>
       <label htmlFor={"response" + idx}>Response {idx + 1}</label>
@@ -19,7 +17,7 @@ const Response = ({
         id={"response" + idx}
         value={response}
         onChange={updateResponse}
-        pattern={re}
+        pattern="(?=.*\w).{1,}"
         required
       />
       {/* If the array is less than 2 items long, don't show delete button. */}
