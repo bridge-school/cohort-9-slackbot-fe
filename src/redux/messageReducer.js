@@ -5,7 +5,7 @@ const INITIAL_MESSAGE_STATE = {
   responses: ["", ""],
   channel: "Select a channel",
   channelID: "",
-  channelSize: ""
+  channelSize: 0
 };
 
 const messageReducer = (state = INITIAL_MESSAGE_STATE, action) => {

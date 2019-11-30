@@ -69,14 +69,19 @@ const NewPollForm = ({
   };
 
   const handleChannelSelection = e => {
-    const channelName = e.target.value;
-    const selectedChannel = channels.filter(each => each.name === channelName);
-    const channelID = selectedChannel[0].id;
-    const channelSize = selectedChannel[0].num_members;
-    console.log("selectedChannel[0]", selectedChannel[0]);
-    updateChannel(channelName);
-    updateChannelID(channelID);
-    updateChannelSize(channelSize);
+    const selectedChannel = e.target.value;
+
+    /* 
+      Filter the channels for the channel that matches 'selectedChannel'
+     decontruct it for 'name', 'id' and 'size'
+     */
+    const [{ name, id, size }] = channels.filter(
+      ({ name }) => name === selectedChannel
+    );
+
+    updateChannel(name);
+    updateChannelID(id);
+    updateChannelSize(size);
   };
 
   return (
@@ -91,6 +96,7 @@ const NewPollForm = ({
             value={message.question}
             onChange={e => updateQuestion(e.target.value)}
             placeholder="Type in your question..."
+            required
           />
           {message.responses.map((response, idx, responses) => (
             <Response
