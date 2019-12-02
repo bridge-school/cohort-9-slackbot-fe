@@ -6,7 +6,6 @@ import * as channelAction from "../../redux/channelActions";
 import styled from "styled-components";
 import colours from "../../assets/colours";
 
-import { numberParser } from "../shared/helperFunctions";
 import { SelectionOfChannels } from "./SelectionOfChannels";
 import Response from "./Response";
 
@@ -16,33 +15,25 @@ const NewPollForm = ({
   updateChannel,
   updateChannelID,
   updateChannelSize,
-  message,
   fetchChannels,
+  message,
   channels
 }) => {
   useEffect(() => {
     fetchChannels();
-  }, [fetchChannels]);
+  }, []);
 
   const handleSubmitPoll = e => {
     e.preventDefault();
   };
 
-  const updateResponse = e => {
-    /* 
-      The input id's are unique and are in the format 'response{indexNumber}', using regEx to grab the {indexNumber}
-
-      We should probably update this function later so that redux handles updating the array.     
-    */
-    const idx = numberParser(e.target.id);
+  const updateResponse = (e, idx) => {
     const _responses = [...message.responses];
     _responses[idx] = e.target.value;
     updateAnswers(_responses);
   };
 
-  const deleteResponse = e => {
-    // Again, we should probably let redux handle updating the array.
-    const idx = parseInt(e.target.attributes.value.value);
+  const deleteResponse = idx => {
     const _responses = [...message.responses];
     _responses.splice(idx, 1);
     updateAnswers(_responses);
@@ -52,13 +43,9 @@ const NewPollForm = ({
     updateAnswers([...message.responses, ""]);
   };
 
-  const handleChannelSelection = e => {
-    const selectedChannel = e.target.value;
-
+  const handleChannelSelection = value => {
     // Filter the channels for the channel that matches 'selectedChannel' then decontruct it for 'name', 'id' and 'size'
-    const [{ name, id, size }] = channels.filter(
-      ({ name }) => name === selectedChannel
-    );
+    const [{ name, id, size }] = channels.filter(({ name }) => name === value);
 
     updateChannel(name);
     updateChannelID(id);
@@ -98,7 +85,7 @@ const NewPollForm = ({
           <label htmlFor="userGroup">User Group:</label>
           <select
             id="userGroup"
-            onChange={handleChannelSelection}
+            onChange={e => handleChannelSelection(e.target.value)}
             defaultValue=""
             required
           >

@@ -16,13 +16,13 @@ const Response = ({
         type="text"
         id={"response" + idx}
         value={response}
-        onChange={updateResponse}
+        onChange={e => updateResponse(e, idx)}
         pattern="(?=.*\w).{1,}"
-        required
+        // required
       />
       {/* If the array is less than 2 items long, don't show delete button. */}
       {length > 2 ? (
-        <button onClick={deleteResponse}>
+        <button onClick={e => deleteResponse(idx)}>
           <img src={Trash} alt={"Delete response: " + response} value={idx} />
         </button>
       ) : (
