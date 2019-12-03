@@ -5,7 +5,7 @@ const INITIAL_CHANNEL_STATE = {
   isLoading: false
 };
 
-const channelReducer = (state = INITIAL_CHANNEL_STATE, action) => {
+export const channelReducer = (state = INITIAL_CHANNEL_STATE, action) => {
   switch (action.type) {
     case channel.SET_IS_CHANNELS_LOADING:
       return { ...state, isLoading: action.data };
@@ -15,5 +15,3 @@ const channelReducer = (state = INITIAL_CHANNEL_STATE, action) => {
       return state;
   }
 };
-
-export default channelReducer;

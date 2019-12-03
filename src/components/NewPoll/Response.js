@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import Trash from "../../assets/trash.svg";
 
-const Response = ({
+export const Response = ({
   response,
   idx,
   length,
@@ -18,7 +18,7 @@ const Response = ({
         value={response}
         onChange={e => updateResponse(e, idx)}
         pattern="(?=.*\w).{1,}"
-        // required
+      // required
       />
       {/* If the array is less than 2 items long, don't show delete button. */}
       {length > 2 ? (
@@ -28,13 +28,11 @@ const Response = ({
           value={idx}
         ></button>
       ) : (
-        ""
-      )}
+          ""
+        )}
     </ResponseContainer>
   );
 };
-
-export default Response;
 
 const ResponseContainer = styled.div`
   input {

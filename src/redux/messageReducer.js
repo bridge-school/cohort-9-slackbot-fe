@@ -8,7 +8,7 @@ const INITIAL_MESSAGE_STATE = {
   channelSize: 0
 };
 
-const messageReducer = (state = INITIAL_MESSAGE_STATE, action) => {
+export const messageReducer = (state = INITIAL_MESSAGE_STATE, action) => {
   switch (action.type) {
     case message.UPDATE_QUESTION:
       return {
@@ -39,5 +39,3 @@ const messageReducer = (state = INITIAL_MESSAGE_STATE, action) => {
       return state;
   }
 };
-
-export default messageReducer;

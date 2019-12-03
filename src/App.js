@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { createGlobalStyle } from "styled-components";
 import { Normalize } from "styled-normalize";
 
-import Header from "./components/shared/Header";
+import { Header } from "./components/shared/Header";
 import { ConnectedNewPollForm } from "./components/NewPoll";
 import { Homepage } from "./components/Home";
 import Results from "./components/Results/Results";
