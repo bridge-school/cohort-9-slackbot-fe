@@ -22,9 +22,11 @@ const Response = ({
       />
       {/* If the array is less than 2 items long, don't show delete button. */}
       {length > 2 ? (
-        <button onClick={e => deleteResponse(idx)}>
-          <img src={Trash} alt={"Delete response: " + response} value={idx} />
-        </button>
+        <button
+          onClick={e => deleteResponse(idx)}
+          aria-label={"Delete response" + response}
+          value={idx}
+        ></button>
       ) : (
         ""
       )}
@@ -40,17 +42,16 @@ const ResponseContainer = styled.div`
     display: inline-block;
   }
   button {
-    width: 30px;
-    height: 30px;
+    width: 25px;
+    height: 25px;
     margin-left: 5px;
     background-color: transparent;
     border: none;
-    padding: 0;
+    background-image: url(${Trash});
+    background-size: cover;
+    background-repeat: no-repeat;
     :hover {
       cursor: pointer;
-    }
-    :hover img {
-      transform: scale(1.05);
     }
   }
 `;
