@@ -2,15 +2,14 @@ import React, { useEffect } from "react";
 import { request } from "./backend-request";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
-import { createGlobalStyle, inject } from "styled-components";
+import { createGlobalStyle } from "styled-components";
 import { Normalize } from "styled-normalize";
 
 import Header from "./components/shared/Header";
-import { NewPollForm } from "./components/NewPoll";
+import { ConnectedNewPollForm } from "./components/NewPoll";
 import { Homepage } from "./components/Home";
 import Results from "./components/Results/Results";
 import PollSubmitted from "./components/PollSubmitted/PollSubmitted";
-import { connect } from "react-redux";
 
 const App = () => {
   useEffect(() => {
@@ -27,7 +26,7 @@ const App = () => {
       <Router>
         <Switch>
           <Route exact path="/" component={Homepage} />
-          <Route path="/new-poll" component={NewPollForm} />
+          <Route path="/new-poll" component={ConnectedNewPollForm} />
           <Route path="/results" component={Results} />
           <Route path="/poll-submitted" component={PollSubmitted} />
         </Switch>
@@ -36,17 +35,7 @@ const App = () => {
   );
 };
 
-const mapStateToProps = state => {
-  const reduxState = state;
-  return { reduxState };
-};
-
-// const mapDispatchToProps = dispatch => ({
-//   setQuestion: dispatch(actions.)
-// })
-
-export default connect(mapStateToProps)(App);
-// export default App;
+export default App;
 
 const GlobalStyles = createGlobalStyle`
   @import url("https://fonts.googleapis.com/css?family=Open+Sans:400,700&display=swap");

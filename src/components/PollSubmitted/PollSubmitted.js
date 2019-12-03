@@ -3,18 +3,20 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import colours from "../../assets/colours";
 
-const handleSeeResults = e => {
-  e.preventDefault();
-  return <PollSubmitted />;
-};
+// const handleSeeResults = e => {
+//   e.preventDefault();
+//   return <PollSubmitted />;
+// };
 
 const PollSubmitted = () => {
   return (
     <Container>
       <div className="wrapper">
         <h2>Your poll has been submitted</h2>
-        <p role="img" aria-label="celebration" className="emoji">
-          🎉
+        <p className="emoji">
+          <span role="img" aria-label="celebration">
+            🎉
+          </span>
         </p>
         <Link to="/results">See Results</Link>&emsp;
         <Link to="/" className="back">
@@ -22,7 +24,6 @@ const PollSubmitted = () => {
         </Link>
       </div>
     </Container>
-
   );
 };
 

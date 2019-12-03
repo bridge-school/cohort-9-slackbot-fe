@@ -1,9 +1,19 @@
-import { createStore } from "redux";
-import reducer from "./reducers";
+import { createStore, combineReducers, applyMiddleware } from "redux";
+import reduxThunk from "redux-thunk";
+import { composeWithDevTools } from "redux-devtools-extension";
+
+import messageReducer from "./messageReducer";
+import channelReducer from "./channelReducer";
+
+const rootReducer = combineReducers({
+  message: messageReducer,
+  channels: channelReducer
+  // 🔔 TO ADD --> archive: archiveReducer
+});
 
 const store = createStore(
-  reducer,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+  rootReducer,
+  composeWithDevTools(applyMiddleware(reduxThunk))
 );
 
 export default store;
