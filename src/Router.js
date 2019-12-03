@@ -8,7 +8,7 @@ import Header from "./components/shared/Header";
 import App from "./App";
 import Homepage from "./components/Homepage";
 
-const Router = () => {
+export const Router = () => {
   return (
     <>
       <Normalize />
@@ -27,8 +27,6 @@ const Router = () => {
     </>
   );
 };
-
-export default Router;
 
 const GlobalStyles = createGlobalStyle`
  html {

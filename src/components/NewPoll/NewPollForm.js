@@ -7,7 +7,7 @@ import styled from "styled-components";
 import colours from "../../assets/colours";
 
 import { SelectionOfChannels } from "./SelectionOfChannels";
-import Response from "./Response";
+import { Response } from "./Response";
 import { validResponse } from "../shared/helperFunctions";
 
 const NewPollForm = ({

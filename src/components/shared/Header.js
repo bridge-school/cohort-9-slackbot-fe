@@ -3,7 +3,7 @@ import styled from "styled-components";
 import colours from "../../assets/colours";
 import Logo from "../../assets/bridge-logo.png";
 
-const Header = () => {
+export const Header = () => {
   return (
     <Container>
       <div className="wrapper">
@@ -15,8 +15,6 @@ const Header = () => {
     </Container>
   );
 };
-
-export default Header;
 
 const Container = styled.header`
   background-color: white;
