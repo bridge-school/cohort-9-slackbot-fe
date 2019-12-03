@@ -16,7 +16,7 @@ export const setChannelList = (channels = []) => ({
 
 // fetch channels thunk 💡
 export const fetchChannelsThunk = () => dispatch => {
-  setIsChannelsLoading(true);
+  dispatch(setIsChannelsLoading(true));
   return fetch(API_BASE_URL + "/channels")
     .then(res => res.json())
     .then(data => {
