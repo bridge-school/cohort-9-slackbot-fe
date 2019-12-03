@@ -170,9 +170,10 @@ const Container = styled.section`
       color: white;
       border: 2px solid transparent;
       border-radius: 3px;
-      padding: 4px 10px;
+      padding: 10px 15px;
       transition: 0.2s;
       margin-bottom: 3rem;
+      font-weight: bold;
     }
     button.addAnswer:hover {
       background-color: ${colours.pink};
@@ -186,6 +187,7 @@ const Container = styled.section`
       text-decoration: none;
       font-weight: 700;
       transition: 0.2s;
+      border-color: transparent;
     }
     button[type="submit"]:hover {
       background-color: ${colours.darkblue};
