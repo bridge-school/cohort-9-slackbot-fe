@@ -1,2 +1,5 @@
-// match only digits and return 'number' type
-export const numberParser = str => parseInt(str.match(/\d/g).join(""));
+export const validResponse = arr => {
+  // regex for one non-whitespace character
+  const re = /(?=.*\w).{1,}/;
+  return arr.every(curr => re.test(curr));
+};

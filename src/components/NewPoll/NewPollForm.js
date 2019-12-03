@@ -8,6 +8,7 @@ import colours from "../../assets/colours";
 
 import { SelectionOfChannels } from "./SelectionOfChannels";
 import Response from "./Response";
+import { validResponse } from "../shared/helperFunctions";
 
 const NewPollForm = ({
   updateQuestion,
@@ -25,6 +26,9 @@ const NewPollForm = ({
 
   const handleSubmitPoll = e => {
     e.preventDefault();
+    validResponse(message.responses)
+      ? console.log("submit poll")
+      : alert("Please complete the response");
   };
 
   const updateResponse = (e, idx) => {
@@ -79,7 +83,7 @@ const NewPollForm = ({
           ))}
 
           <button onClick={handleAddAnotherResponse} className="addAnswer">
-            + Add another resp
+            + Add another response
           </button>
 
           <label htmlFor="userGroup">User Group:</label>
