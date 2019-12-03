@@ -1,15 +1,30 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { PreviousPolls } from "./PreviousPolls";
 import colours from "../../assets/colours";
+import { API_BASE_URL } from "../../backend-request/index";
 
 export const Homepage = () => {
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    fetch(API_BASE_URL + "/previous-polls")
+      .then(res => res.json())
+      .then(data => {
+        // return _data.concat(data);
+        setData(data);
+      })
+      .catch(error => {
+        console.log("error: ", error);
+      });
+  }, []);
+
   return (
     <Main>
       <div className="wrapper">
         <Link to="/new-poll">Create new poll</Link>
-        <PreviousPolls />
+        <PreviousPolls listOfPrevious={data} />
       </div>
     </Main>
   );
