@@ -5,10 +5,9 @@ export const API_BASE_URL =
 
 export const request = (endpoint, method = "GET", body) =>
   fetch(`${API_BASE_URL}/${endpoint}`, {
-    method,
     headers: {
-      "content-type": "application/json",
-      method,
-      body
-    }
+      "Content-Type": "application/json",
+    },
+    method,
+    body: JSON.stringify(body)
   });
