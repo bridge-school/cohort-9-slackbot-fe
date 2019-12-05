@@ -10,4 +10,14 @@ describe("Test for validResponse function", () => {
   it("returns false if one item in the array is just a space", () => {
     expect(validResponse(["a", " "])).toBe(false);
   });
+  it("return false", () => {
+    const questions = [
+      ["", "a", "yes"],
+      ["a", "b", "", "d"],
+      ["a", "b", "\t"],
+      ["a", "b", "\n"]
+    ];
+    const SUCCESS = [false, false, false, false];
+    expect(questions.map(question => validResponse(question))).toEqual(SUCCESS);
+  });
 });

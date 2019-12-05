@@ -19,6 +19,13 @@ describe("Test of setIsChannelsLoading", () => {
     };
     expect(setIsChannelsLoading()).toEqual(SUCCESS);
   });
+  it("argument is returned in data payload ", () => {
+    const SUCCESS = {
+      type: channel.SET_IS_CHANNELS_LOADING,
+      data: "hello"
+    };
+    expect(setIsChannelsLoading("hello")).toEqual(SUCCESS);
+  });
 });
 
 describe("Test of setChannelList", () => {
