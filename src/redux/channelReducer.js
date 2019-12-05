@@ -1,6 +1,6 @@
 import { channel } from "./channelActions";
 
-const INITIAL_CHANNEL_STATE = {
+export const INITIAL_CHANNEL_STATE = {
   channels: [],
   isLoading: false
 };
