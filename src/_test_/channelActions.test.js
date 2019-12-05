@@ -12,10 +12,17 @@ describe("Test of setIsChannelsLoading", () => {
     };
     expect(setIsChannelsLoading(true)).toEqual(SUCCESS);
   });
+  it("Empty argument returns a data payload that is false", () => {
+    const SUCCESS = {
+      type: channel.SET_IS_CHANNELS_LOADING,
+      data: false
+    };
+    expect(setIsChannelsLoading()).toEqual(SUCCESS);
+  });
 });
 
 describe("Test of setChannelList", () => {
-  it("returns a data payload with a data = true", () => {
+  it("returns a data payload equal to the data array", () => {
     const data = ["channel1", "channel2", "channel3"];
     const SUCCESS = {
       type: channel.SET_CHANNELS_LIST,
