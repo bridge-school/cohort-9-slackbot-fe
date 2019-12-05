@@ -1,5 +1,8 @@
-import * as channelActions from "../redux/messageActions";
-import { setIsChannelsLoading, channel } from "../redux/channelActions";
+import {
+  setIsChannelsLoading,
+  setChannelList,
+  channel
+} from "../redux/channelActions";
 
 describe("Test of setIsChannelsLoading", () => {
   it("returns a data payload with a data = true", () => {
@@ -8,5 +11,16 @@ describe("Test of setIsChannelsLoading", () => {
       data: true
     };
     expect(setIsChannelsLoading(true)).toEqual(SUCCESS);
+  });
+});
+
+describe("Test of setChannelList", () => {
+  it("returns a data payload with a data = true", () => {
+    const data = ["channel1", "channel2", "channel3"];
+    const SUCCESS = {
+      type: channel.SET_CHANNELS_LIST,
+      data
+    };
+    expect(setChannelList(data)).toEqual(SUCCESS);
   });
 });
