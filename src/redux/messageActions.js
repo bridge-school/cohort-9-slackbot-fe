@@ -1,3 +1,5 @@
+import { API_BASE_URL, request } from "../backend-request/index";
+
 export const message = {
   UPDATE_QUESTION: "UPDATE_QUESTION",
   UPDATE_ANSWERS: "UPDATE_ANSWERS",
@@ -30,3 +32,14 @@ export const updateChannelSize = newChannelSize => ({
   type: message.UPDATE_CHANNEL_SIZE,
   data: newChannelSize
 });
+
+// Post Messages to Backend Thunk
+export const postMessagesThunk = () => (dispatch, getState) => {
+  return request("polls", 'POST', getState().message)
+    .then(() => {
+      console.log('data has been sent to back end')
+    })
+    .catch(error => {
+      console.log(error);
+    })
+};

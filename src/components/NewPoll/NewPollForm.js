@@ -17,6 +17,7 @@ const NewPollForm = ({
   updateChannelID,
   updateChannelSize,
   fetchChannels,
+  postMessages,
   message,
   channels
 }) => {
@@ -27,7 +28,7 @@ const NewPollForm = ({
   const handleSubmitPoll = e => {
     e.preventDefault();
     validResponse(message.responses)
-      ? console.log("submit poll")
+      ? postMessages()
       : alert("Please complete the response");
   };
 
@@ -126,7 +127,8 @@ const mapDispatchToProps = dispatch => ({
     dispatch(messageAction.updateChannelID(newChannelID)),
   updateChannelSize: newChannelSize =>
     dispatch(messageAction.updateChannelSize(newChannelSize)),
-  fetchChannels: () => dispatch(channelAction.fetchChannelsThunk())
+  fetchChannels: () => dispatch(channelAction.fetchChannelsThunk()),
+  postMessages: () => dispatch(messageAction.postMessagesThunk())
 });
 
 export const ConnectedNewPollForm = connect(
