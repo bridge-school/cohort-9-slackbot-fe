@@ -9,7 +9,7 @@ export const Homepage = () => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    fetch(API_BASE_URL + "/previous-polls")
+    fetch(API_BASE_URL + "/polls")
       .then(res => res.json())
       .then(data => {
         // return _data.concat(data);
