@@ -7,19 +7,36 @@ const Results = props => {
   // This is always `2`, as we have defined.
   const id = splittedPath[2];
 
-  const [data, setData] = useState({
-    responses: [],
-    id: "",
-    chennelID: "",
-    question: "",
-    channel: ""
-  });
+  const [data, setData] = useState({});
+  const responses = data.responses;
+
+  const nameFunction = () => {
+    let responseArray = [];
+    for (let response in responses) {
+      let vote = responses[response];
+      responseArray.push({ response, vote });
+      console.log("responseArray is", responseArray);
+    }
+    return responseArray;
+  };
+
+  const test = () => {
+    if (responses) {
+      return Object.keys(responses).map(eachResponse => {
+        return (
+          <p>
+            {eachResponse} : {responses[eachResponse]}
+          </p>
+        );
+      });
+    }
+  };
+
   // fetch the poll info from db
   useEffect(() => {
     fetch(API_BASE_URL + `/result/${id}`)
       .then(res => res.json())
       .then(data => {
-        // return _data.concat(data);
         setData(data);
       })
       .catch(error => {
@@ -29,12 +46,11 @@ const Results = props => {
 
   return (
     <div>
-      <p>{data.question}</p>
-      {data.responses.map(ele => {
-        return <p>{ele}</p>;
-      })}
-      <p>{data.channel}</p>
-      <p>{data.chennelID}</p>
+      <p>QUESTION: {data.question}</p>
+      {test()}
+      <p>CHANNEL: {data.channel}</p>
+      <p>CHANNEL SIZE: {data.channelSize}</p>
+      <p>CHANNEL ID: {data.chennelID}</p>
       <p>{data.id}</p>
     </div>
   );
