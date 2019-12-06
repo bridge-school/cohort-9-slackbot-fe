@@ -10,17 +10,7 @@ const Results = props => {
   const [data, setData] = useState({});
   const responses = data.responses;
 
-  const nameFunction = () => {
-    let responseArray = [];
-    for (let response in responses) {
-      let vote = responses[response];
-      responseArray.push({ response, vote });
-      console.log("responseArray is", responseArray);
-    }
-    return responseArray;
-  };
-
-  const test = () => {
+  const responseArray = () => {
     if (responses) {
       return Object.keys(responses).map(eachResponse => {
         return (
@@ -47,7 +37,7 @@ const Results = props => {
   return (
     <div>
       <p>QUESTION: {data.question}</p>
-      {test()}
+      {responseArray()}
       <p>CHANNEL: {data.channel}</p>
       <p>CHANNEL SIZE: {data.channelSize}</p>
       <p>CHANNEL ID: {data.chennelID}</p>
