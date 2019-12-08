@@ -9,6 +9,7 @@ import colours from "../../assets/colours";
 import { SelectionOfChannels } from "./SelectionOfChannels";
 import { Response } from "./Response";
 import { validResponse } from "../shared/helperFunctions";
+import { useHistory } from "react-router-dom";
 
 const NewPollForm = ({
   updateQuestion,
@@ -21,56 +22,48 @@ const NewPollForm = ({
   message,
   channels
 }) => {
+  const history = useHistory();
+
   useEffect(() => {
     fetchChannels();
   }, []);
 
-  const handleSubmitPoll = e => {
-    // e.preventDefault();
-    // validResponse(message.responses)
-    //   ? postMessages()
-    //   : alert("Please complete the response");
-    postMessages();
-    // TODO make this go to the polls-submitted page
+  const handleSubmitPoll = event => {
+    event.preventDefault();
+    const isValid = validResponse(message.responses);
+    if (isValid) {
+      postMessages()
+        .then(() => {
+          history.push(`/poll-submitted`);
+        })
+        .catch(err => {
+          console.error(err);
+          alert(`Oops, something went wrong : ${err.message}`);
+        });
+    } else {
+      alert("Please complete the response");
+    }
   };
 
   const responseArray = Object.keys(message.responses);
 
   // update the current state responses
   const updateResponse = (e, idx) => {
-    // const _responses = { ...message.responses };
-    // _responses[idx] = e.target.value;
-    // updateAnswers(_responses);
-
-    const _responses = { ...message.responses };
-    const _responseArray = Object.keys(message.responses);
-    let targetAnswer = _responseArray[idx]; // targetAnswer gives the orgiginal string
-    _responseArray[idx] = e.target.value; // this gives the new answer
-    console.log("_responses[targetAnswer]", _responses[targetAnswer]); // this gives the VALUE
-    _responses[_responseArray[idx]] = _responses[targetAnswer];
-    delete _responses[targetAnswer];
+    const _responses = [...message.responses];
+    _responses[idx] = e.target.value;
     updateAnswers(_responses);
-    console.log("FINAL_RESPONSES IS", _responses);
   };
 
   // delete the specific responseX
   const deleteResponse = idx => {
-    // const _responses = [...message.responses];
-    // _responses.splice(idx, 1);
-    // updateAnswers(_responses);
-
-    const _responses = { ...message.responses };
-    const _responseArray = Object.keys(message.responses);
-    const targetAnswer = _responseArray[idx]; // targetAnswer gives the orgiginal string
-
-    // _responses.splice(idx, 1);
-    delete _responses[targetAnswer];
+    const _responses = [...message.responses];
+    _responses.splice(idx, 1);
     updateAnswers(_responses);
   };
 
   const handleAddAnotherResponse = () => {
-    // updateAnswers([...message.responses, ""]);
-    updateAnswers({ ...message.responses, "": 0 });
+    updateAnswers([...message.responses, ""]);
+    // updateAnswers({ ...message.responses, "": 0 });
   };
 
   const handleChannelSelection = value => {
@@ -99,19 +92,16 @@ const NewPollForm = ({
             pattern="(?=.*\w).{1,}"
             required
           />
-          {/* {message.responses.map((response, idx, responses) => ( */}
-          {Object.keys(message.responses).map(
-            (response, index, responseArray) => (
-              <Response
-                key={"response" + index}
-                idx={index}
-                response={response}
-                length={responseArray.length}
-                updateResponse={updateResponse}
-                deleteResponse={deleteResponse}
-              />
-            )
-          )}
+          {message.responses.map((response, index, responses) => (
+            <Response
+              key={"response" + index}
+              idx={index}
+              response={response}
+              length={responseArray.length}
+              updateResponse={updateResponse}
+              deleteResponse={deleteResponse}
+            />
+          ))}
 
           <button onClick={handleAddAnotherResponse} className="addAnswer">
             + Add another response
