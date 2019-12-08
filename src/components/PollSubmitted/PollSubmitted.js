@@ -18,7 +18,7 @@ const PollSubmitted = () => {
             🎉
           </span>
         </p>
-        <Link to="/results">See Results</Link>&emsp;
+        {/* <Link to="/results">See Results</Link>&emsp; */}
         <Link to="/" className="back">
           Back to Home
         </Link>

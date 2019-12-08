@@ -2,7 +2,11 @@ import { message } from "./messageActions";
 
 const INITIAL_MESSAGE_STATE = {
   question: "",
-  responses: ["", ""],
+  // responses: ["", ""],
+  responses: {
+    "Enter response 1": 0,
+    "Enter response 2": 0
+  },
   channel: "Select a channel",
   channelID: "",
   channelSize: 0

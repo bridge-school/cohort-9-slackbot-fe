@@ -35,11 +35,15 @@ export const updateChannelSize = newChannelSize => ({
 
 // Post Messages to Backend Thunk
 export const postMessagesThunk = () => (dispatch, getState) => {
-  return request("polls", 'POST', getState().message)
+  // const originalMessage = getState().message;
+
+  // const originalMessageAsResponseAsObj = {};
+
+  return request("polls", "POST", getState().message)
     .then(() => {
-      console.log('data has been sent to back end')
+      console.log("data has been sent to back end");
     })
     .catch(error => {
       console.log(error);
-    })
+    });
 };
