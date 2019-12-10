@@ -35,11 +35,23 @@ export const updateChannelSize = newChannelSize => ({
 
 // Post Messages to Backend Thunk
 export const postMessagesThunk = () => (dispatch, getState) => {
-  return request("polls", 'POST', getState().message)
-    .then(() => {
-      console.log('data has been sent to back end')
-    })
-    .catch(error => {
-      console.log(error);
-    })
+  const originalMessage = getState().message;
+  const clonedMessage = { ...originalMessage };
+
+  const currentAnswersCount = clonedMessage.responses.length;
+
+  const makeResponseObj = clonedMessage.responses.reduce((obj, ele) => {
+    obj[ele] = 0;
+    return obj;
+  }, {});
+
+  if (currentAnswersCount !== Object.keys(makeResponseObj).length) {
+    return Promise.reject(new Error(`Do you have the same answer twice?`));
+  }
+
+  clonedMessage.responses = makeResponseObj;
+
+  return request("polls", "POST", clonedMessage).then(() => {
+    console.log("data has been sent to back end");
+  });
 };

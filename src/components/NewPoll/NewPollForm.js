@@ -9,6 +9,7 @@ import colours from "../../assets/colours";
 import { SelectionOfChannels } from "./SelectionOfChannels";
 import { Response } from "./Response";
 import { validResponse } from "../shared/helperFunctions";
+import { useHistory } from "react-router-dom";
 
 const NewPollForm = ({
   updateQuestion,
@@ -21,23 +22,39 @@ const NewPollForm = ({
   message,
   channels
 }) => {
+  const history = useHistory();
+
   useEffect(() => {
     fetchChannels();
   }, []);
 
-  const handleSubmitPoll = e => {
-    e.preventDefault();
-    validResponse(message.responses)
-      ? postMessages()
-      : alert("Please complete the response");
+  const handleSubmitPoll = event => {
+    event.preventDefault();
+    const isValid = validResponse(message.responses);
+    if (isValid) {
+      postMessages()
+        .then(() => {
+          history.push(`/poll-submitted`);
+        })
+        .catch(err => {
+          console.error(err);
+          alert(`Oops, something went wrong : ${err.message}`);
+        });
+    } else {
+      alert("Please complete the response");
+    }
   };
 
+  const responseArray = Object.keys(message.responses);
+
+  // update the current state responses
   const updateResponse = (e, idx) => {
     const _responses = [...message.responses];
     _responses[idx] = e.target.value;
     updateAnswers(_responses);
   };
 
+  // delete the specific responseX
   const deleteResponse = idx => {
     const _responses = [...message.responses];
     _responses.splice(idx, 1);
@@ -46,6 +63,7 @@ const NewPollForm = ({
 
   const handleAddAnotherResponse = () => {
     updateAnswers([...message.responses, ""]);
+    // updateAnswers({ ...message.responses, "": 0 });
   };
 
   const handleChannelSelection = value => {
@@ -56,6 +74,8 @@ const NewPollForm = ({
     updateChannelID(id);
     updateChannelSize(size);
   };
+
+  // console.log("responseArray is", responseArray);
 
   return (
     <Container>
@@ -72,12 +92,12 @@ const NewPollForm = ({
             pattern="(?=.*\w).{1,}"
             required
           />
-          {message.responses.map((response, idx, responses) => (
+          {message.responses.map((response, index, responses) => (
             <Response
-              key={"response" + idx}
-              idx={idx}
+              key={"response" + index}
+              idx={index}
               response={response}
-              length={responses.length}
+              length={responseArray.length}
               updateResponse={updateResponse}
               deleteResponse={deleteResponse}
             />
@@ -111,6 +131,7 @@ const NewPollForm = ({
     </Container>
   );
 };
+
 const mapStateToProps = state => ({
   message: state.message,
   channels: state.channels.channels
