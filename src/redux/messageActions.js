@@ -41,7 +41,7 @@ export const postMessagesThunk = () => (dispatch, getState) => {
   const currentAnswersCount = clonedMessage.responses.length;
 
   const makeResponseObj = clonedMessage.responses.reduce((obj, ele) => {
-    obj[ele] = 0;
+    obj[ele] = [];
     return obj;
   }, {});
 
