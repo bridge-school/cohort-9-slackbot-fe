@@ -25,7 +25,6 @@ const NewPollForm = ({
 }) => {
   const history = useHistory();
 
-  console.log(isLoading);
   useEffect(() => {
     fetchChannels();
   }, []);
