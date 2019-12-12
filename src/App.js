@@ -8,7 +8,7 @@ import { Normalize } from "styled-normalize";
 import { Header } from "./components/shared/Header";
 import { ConnectedNewPollForm } from "./components/NewPoll";
 import { Homepage } from "./components/Home";
-import Results from "./components/Results/Results";
+import { Results } from "./components/Results/Results";
 import PollSubmitted from "./components/PollSubmitted/PollSubmitted";
 
 const App = () => {
