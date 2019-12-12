@@ -20,7 +20,8 @@ const NewPollForm = ({
   fetchChannels,
   postMessages,
   message,
-  channels
+  channels,
+  isLoading
 }) => {
   const history = useHistory();
 
@@ -115,7 +116,7 @@ const NewPollForm = ({
             required
           >
             <option value="" disabled>
-              Select a channel
+              {isLoading ? "Fetching Channels" : "Select a channel"}
             </option>
             {/* CHANNELS */}
             {channels.map(({ name, id }) => (
@@ -134,7 +135,8 @@ const NewPollForm = ({
 
 const mapStateToProps = state => ({
   message: state.message,
-  channels: state.channels.channels
+  channels: state.channels.channels,
+  isLoading: state.channels.isLoading
 });
 
 const mapDispatchToProps = dispatch => ({
