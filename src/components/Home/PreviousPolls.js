@@ -14,7 +14,6 @@ export const PreviousPolls = ({ listOfPrevious }) => {
     <Container>
       <h2>Previous polls</h2>
       {listOfPrevious.map(eachPoll => {
-        console.log("eachPoll is", eachPoll);
         return (
           <p key={eachPoll.id} onClick={() => onClickHandler(eachPoll.id)}>
             {eachPoll.question}
