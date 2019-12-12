@@ -15,7 +15,7 @@ const Results = props => {
       return Object.keys(responses).map(eachResponse => {
         return (
           <p>
-            {eachResponse} : {responses[eachResponse]}
+            {eachResponse} : {responses[eachResponse].length}
           </p>
         );
       });
